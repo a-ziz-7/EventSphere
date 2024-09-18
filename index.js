@@ -13,17 +13,16 @@ function generateRandomId() {
 // Event Schema:
 /* 
 {
-    "id": ,
+    "id": 0000,
     "title": "",
     "time": "2024-10-05T14:00:00Z",
     "owner": "",
-    "limit": ,
+    "limit": 1,
     "description": "" 
     // address
     // attendies
     // pictures
     // chat
-
 }
 */
 
@@ -67,9 +66,9 @@ app.get('/', (req, res) => {
     res.send(x);
 });
 
-//http://localhost:3000/event/xxxx
-app.get('/event', (req, res) => {
-    const eventId = parseInt(req.query.id, 10);
+// http://localhost:3000/event/xxxx
+app.get('/event/:id', (req, res) => {
+    const eventId = parseInt(req.params.id, 10);  // Use req.params instead of req.query
     const event = events.find(e => e.id === eventId);
 
     if (event) {
