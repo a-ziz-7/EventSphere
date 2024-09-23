@@ -1,6 +1,12 @@
-// eslint-disable-next-line no-unused-vars
 import React from "react";
-import ReactDom from "react-dom";
+import { createRoot } from "react-dom/client"; // Import createRoot from react-dom/client
 import App from "./components/App";
 
-ReactDom.render(<App />, document.getElementById("root"));
+// Select the root element
+const rootElement = document.getElementById("root");
+
+// Create a root for the application
+const root = createRoot(rootElement);
+
+// Render the App component
+root.render(<App />);
