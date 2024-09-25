@@ -21,7 +21,6 @@ const events = [
         address: "Times Square, NY",
         attendees: 150,
         pictures: ["image1.jpg", "image2.jpg"],
-        chat: ["Looking forward to it!", "Great event!"],
         categories: ["shows", "theater"]
     },
     {
@@ -34,7 +33,6 @@ const events = [
         address: "Central Park, NY",
         attendees: 30,
         pictures: ["yoga1.jpg", "yoga2.jpg"],
-        chat: ["Excited!", "Can't wait for the session!"],
         categories: ["fitness"]
     },
     {
@@ -47,7 +45,6 @@ const events = [
         address: "Brooklyn, NY",
         attendees: 70,
         pictures: ["meetup1.jpg", "meetup2.jpg"],
-        chat: ["This looks interesting!", "Can't wait to meet new people."],
         categories: ["social", "tech"]
     },
     {
@@ -60,7 +57,6 @@ const events = [
         address: "Brooklyn Stadium, NY",
         attendees: 800,
         pictures: ["football1.jpg", "football2.jpg"],
-        chat: ["Can't wait for the match!", "Go team!"],
         categories: ["sports"]
     },
     {
@@ -73,7 +69,6 @@ const events = [
         address: "Brooklyn Stadium, NY",
         attendees: 800,
         pictures: [],
-        chat: ["Can't wait for the match!", "Go team!"],
         categories: ["concert", "art", "food-drinks", "social"]
     }
 ];

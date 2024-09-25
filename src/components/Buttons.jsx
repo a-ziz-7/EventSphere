@@ -67,26 +67,22 @@ function Buttons() {
             {/* Display detailed event information */}
             <h5>{event.title}</h5>
             <p>Time: {new Date(event.time).toLocaleString()}</p>
-            <p>Owner: {event.owner}</p>
+            {false && <p>Owner: {event.owner}</p>}
+            
             <p>Attendees: {event.attendees} / {event.limit}</p>
             <p>Address: {event.address}</p>
             <p>Description: {event.description}</p>
-            <div>
-              {/* Display event pictures */}
-              Pictures:
-              {event.pictures.map((pic, index) => (
-                <img key={index} src={pic} alt={`event-pic-${index}`} style={{ width: '50px', margin: '5px' }} />
-              ))}
-            </div>
-            <div>
-              {/* Display chat messages related to the event */}
-              Chat:
-              <ul>
-                {event.chat.map((message, index) => (
-                  <li key={index}>{message}</li>
+            <p>Categories: {event.categories.join(", ")}</p>
+            {/* only show images if the image array is not empty */}
+            {/* {event.pictures.length > 0 && (
+              <div>
+                {/* Display event pictures }
+                Pictures:
+                {event.pictures.map((pic, index) => (
+                  <img key={index} src={pic} alt={`event-pic-${index}`} style={{ width: '50px', margin: '5px' }} />
                 ))}
-              </ul>
-            </div>
+              </div>
+            )} */}
           </li>
         ))}
       </ul>
