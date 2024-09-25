@@ -86,9 +86,33 @@ app.get('/api/events/:category', (req, res) => {
     if (filteredEvents.length > 0) {
         res.json(filteredEvents);
     } else {
-        res.status(404).send('No events found for this category');
+        res.status(404).send('No events found for this category.');
     }
 });
+
+//Route to get events by title
+app.get('/api/events/:title', (req,res) => {
+    const{ title } = req.params;
+    const filteredEvents = events.filter(event => event.title.includes(title));
+
+    if(filteredEvents.length > 0){
+        res.json(filteredEvents);
+    } else{
+        res.status(404).send('No events found by this title.')
+    }
+});
+
+//Route to get events by owner
+app.get('/api/events/:owner', (req,res) =>{
+    const{ owner } = req.params;
+    const events = events.filter(event => event.owner.includes(owner) );
+    if(filteredEvents.length > 0){
+        res.json(filteredEvents);
+    }
+    else{
+        res.status(404).send('No events found for this owner.')
+    }
+})
 
 // Start the server
 app.listen(port, () => {
