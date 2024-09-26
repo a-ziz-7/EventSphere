@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import EventsList from "./EventsList";
 
 function Buttons() {
   // State to store fetched events
@@ -61,31 +62,7 @@ function Buttons() {
 
       {/* Render the list of events once fetched */}
       {/* Make sure to render them in proper portion of the page and style it the way you want */}
-      <ul className="list-group mt-4">
-        {events.map((event) => (
-          <li key={event.id} className="list-group-item">
-            {/* Display detailed event information */}
-            <h5>{event.title}</h5>
-            <p>Time: {new Date(event.time).toLocaleString()}</p>
-            {false && <p>Owner: {event.owner}</p>}
-            
-            <p>Attendees: {event.attendees} / {event.limit}</p>
-            <p>Address: {event.address}</p>
-            <p>Description: {event.description}</p>
-            <p>Categories: {event.categories.join(", ")}</p>
-            {/* only show images if the image array is not empty */}
-            {/* {event.pictures.length > 0 && (
-              <div>
-                {/* Display event pictures }
-                Pictures:
-                {event.pictures.map((pic, index) => (
-                  <img key={index} src={pic} alt={`event-pic-${index}`} style={{ width: '50px', margin: '5px' }} />
-                ))}
-              </div>
-            )} */}
-          </li>
-        ))}
-      </ul>
+      <EventsList events={events}/>
     </div>
   );
 }
