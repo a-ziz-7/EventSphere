@@ -17,6 +17,11 @@ function Header() {
       <ul className="nav nav-pills">
         <li className="nav-item">
           <a href="#" className="nav-link active" aria-current="page">
+            Home
+          </a>
+        </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
             Browse Events
           </a>
         </li>
@@ -27,17 +32,12 @@ function Header() {
         </li>
         <li className="nav-item">
           <a href="#" className="nav-link">
-            Pricing
+            Meet Our Team
           </a>
         </li>
         <li className="nav-item">
           <a href="#" className="nav-link">
-            FAQs
-          </a>
-        </li>
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            Log in
+            Faqs
           </a>
         </li>
       </ul>
