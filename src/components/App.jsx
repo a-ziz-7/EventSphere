@@ -1,4 +1,5 @@
 import Home from "./Home";
+import FrontPage from "./FrontPage";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,7 +12,8 @@ function App() {
     <Router>
       <Routes>
         {/* Route for Home */}
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<FrontPage />} />
+        <Route path="/home" element={<Home />} />
         {/* Redirect to Home if route is not found */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
