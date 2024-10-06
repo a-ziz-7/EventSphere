@@ -34,30 +34,27 @@ function Buttons() {
     <div className="d-flex flex-column align-items-center py-5">
       {/* Buttons to select different categories */}
       <div className="d-flex gap-2 justify-content-center py-3">
-        <button className="btn btn-primary rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Shows", e.target.className)}>
-          Shows
+        <button className="btn btn-primary rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Entertainment", e.target.className)}>
+          Festivals/Entertainment
         </button>
-        <button className="btn btn-secondary rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Fitness", e.target.className)}>
-          Fitness
+        <button className="btn btn-danger rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Sport", e.target.className)}>
+          Sport/Fitness
         </button>
-        <button className="btn btn-success rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Social", e.target.className)}>
-          Social
-        </button>
-        <button className="btn btn-danger rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Sports", e.target.className)}>
-          Sports
+        <button className="btn btn-success rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Community", e.target.className)}>
+          Community/Social
         </button>
         <button className="btn btn-warning rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Concert", e.target.className)}>
-          Concert
+          Concert/Music
         </button>
         <button className="btn btn-info rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Art", e.target.className)}>
-          Art
+          Art/Exhibitions
         </button>
-        <button className="btn btn-light rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Theater", e.target.className)}>
-          Theater
+        <button className="btn btn-light rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Holiday", e.target.className)}>
+          Holidays/Family
         </button>
-        <button className="btn btn-dark rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Food & Drinks", e.target.className)}>
+        {/* <button className="btn btn-dark rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Food & Drinks", e.target.className)}>
           Food & Drinks
-        </button>
+        </button> */}
       </div>
 
       {/* Render the list of events once fetched */}
