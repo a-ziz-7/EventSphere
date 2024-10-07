@@ -47,7 +47,7 @@ function Buttons() {
           Concert/Music
         </button>
         <button className="btn btn-info rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Art", e.target.className)}>
-          Art/Exhibitions
+          Art/Performances
         </button>
         <button className="btn btn-light rounded-pill px-3" type="button" onClick={(e) => handleCategoryClick("Holiday", e.target.className)}>
           Holidays/Family
