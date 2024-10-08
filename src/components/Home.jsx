@@ -11,7 +11,7 @@ function Home() {
       <Navbar />
       <HeroSection />
       <Buttons />
-      <h1 className="container">
+      <h1 className="container text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
         Popular Events <span className="badge text-bg-secondary">Near You</span>
       </h1>
       <Footer />
