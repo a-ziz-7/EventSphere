@@ -57,6 +57,153 @@ export const getEvents = async (req, res) => {
     }
 };
 
+export const editEvent = async (req, res) => {
+    const { eventId } = req.params; // Get the event ID from the URL
+    const {
+        title,
+        description,
+        time,
+        address,
+        capacity,
+        categories,
+        duration,
+        state,
+        thumbnail
+    } = req.body; // Extract fields from the request body
+
+    try {
+        // Get the current event from the database
+        const existingEvent = await db.query('SELECT * FROM event WHERE id = $1', [eventId]);
+
+        if (existingEvent.rows.length === 0) {
+            return res.status(404).send('Event not found.');
+        }
+
+        // Prepare the update query and parameters (only update fields that are provided)
+        const updateFields = [];
+        const updateValues = [];
+
+        if (title) {
+            updateFields.push('title = $' + (updateFields.length + 1));
+            updateValues.push(title);
+        }
+        if (description) {
+            updateFields.push('description = $' + (updateFields.length + 1));
+            updateValues.push(description);
+        }
+        if (time) {
+            updateFields.push('time = $' + (updateFields.length + 1));
+            updateValues.push(time);
+        }
+        if (address) {
+            updateFields.push('address = $' + (updateFields.length + 1));
+            updateValues.push(address);
+        }
+        if (capacity) {
+            updateFields.push('capacity = $' + (updateFields.length + 1));
+            updateValues.push(capacity);
+        }
+        if (categories) {
+            updateFields.push('categories = $' + (updateFields.length + 1));
+            updateValues.push(categories.join(',')); // Store categories as a comma-separated string
+        }
+        if (duration) {
+            updateFields.push('duration = $' + (updateFields.length + 1));
+            updateValues.push(duration);
+        }
+        if (state) {
+            updateFields.push('state = $' + (updateFields.length + 1));
+            updateValues.push(state);
+        }
+        if (thumbnail !== undefined) {
+            updateFields.push('thumbnail = $' + (updateFields.length + 1));
+            updateValues.push(thumbnail);
+        }
+
+        // Add eventId as the last parameter to update the correct event
+        updateValues.push(eventId);
+
+        // Only proceed if there are fields to update
+        if (updateFields.length > 0) {
+            const updateQuery = `
+                UPDATE event
+                SET ${updateFields.join(', ')}
+                WHERE id = $${updateValues.length}
+                RETURNING *;
+            `;
+
+            // Execute the update query
+            const result = await db.query(updateQuery, updateValues);
+            res.json(result.rows[0]);
+        } else {
+            res.status(400).send('No fields provided to update.');
+        }
+    } catch (err) {
+        console.error('Error updating event:', err.stack);
+        res.status(500).send('Server error.');
+    }
+};
+export const searchEvents = async (req, res) => {
+    const { title, address, start, end, category, state } = req.body; // optional fields
+
+    try {
+        // Base query
+        let query = 'SELECT * FROM event WHERE 1=1';
+        const values = [];
+        let index = 1;
+
+        // Add conditions dynamically based on provided fields
+        if (title) {
+            query += ` AND title ILIKE $${index}`;
+            values.push(`%${title}%`); // Use ILIKE for case-insensitive search
+            index++;
+        }
+
+        if (address) {
+            query += ` AND address ILIKE $${index}`;
+            values.push(`%${address}%`);
+            index++;
+        }
+
+        if (start) {
+            query += ` AND time >= $${index}`;
+            values.push(start);
+            index++;
+        }
+
+        if (end) {
+            query += ` AND time <= $${index}`;
+            values.push(end);
+            index++;
+        }
+
+        if (category) {
+            query += ` AND categories ILIKE $${index}`;
+            values.push(`%${category}%`);
+            index++;
+        }
+
+        if (state) {
+            query += ` AND state ILIKE $${index}`;
+            values.push(`%${state}%`);
+            index++;
+        }
+
+        // Execute the query
+        const result = await db.query(query, values);
+
+        if (result.rows.length > 0) {
+            res.json(result.rows);
+        } else {
+            res.status(404).send('No events found for the provided search criteria.');
+        }
+
+    } catch (err) {
+        console.error('Error searching events:', err.stack);
+        res.status(500).send('Server error');
+    }
+};
+
 // Event fetching endpoint (no authentication required)
 export const getEventsCategory = async (req, res) => {
     const { category } = req.params;
@@ -243,5 +390,3 @@ async function getStatistics() {
     }
     return stats;
 }
-
-// console.log(await getStatistics());

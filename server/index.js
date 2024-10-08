@@ -15,7 +15,9 @@ import {
 import {
     getEvents,
     createEvent,
-    getEventsCategory
+    editEvent,
+    getEventsCategory,
+    searchEvents
 } from './controllers/eventController.js';
 
 import {
@@ -50,6 +52,8 @@ app.post('/api/auth/logout', isAuthenticated, logoutUser);
 // Event routes
 app.get('/api/events', getEvents);
 app.post('/api/events', isAuthenticated, createEvent);
+app.patch('/api/events/:eventId', isAuthenticated, editEvent);
+app.get('/api/events/search', searchEvents);
 app.get('/api/events/:category', getEventsCategory);
 // Test route
 app.get('/api/developers', getDevelopers);
