@@ -1,6 +1,9 @@
-import React from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from "react";
 
 function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 ">
       <nav
@@ -20,6 +23,7 @@ function Navbar() {
         <div className="flex lg:hidden">
           <button
             type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
           >
             <span className="sr-only">Open main menu</span>
@@ -68,8 +72,6 @@ function Navbar() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
           <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
-            {" "}
-            {/* Changed to text-lg */}
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
           <a
@@ -79,10 +81,51 @@ function Navbar() {
             Sign up <span aria-hidden="true">&rarr;</span>
           </a>
         </div>
-
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
       </nav>
-      {/* Mobile menu placeholder */}
+
+      {/* Mobile menu */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden navbar-gradient">
+          <div className="space-y-2 px-2 pb-3 pt-2">
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+            >
+              Browse Events
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+            >
+              RSVP
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+            >
+              Our Team
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+            >
+              Terms
+            </a>
+            <a
+              href="#"
+              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+            >
+              Log in
+            </a>
+            <a
+              href="#"
+              className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
+            >
+              Sign up
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
