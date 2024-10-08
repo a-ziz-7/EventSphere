@@ -2,17 +2,17 @@ import React from "react";
 
 function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-pink-100">
+    <header className="fixed inset-x-0 top-0 z-50 ">
       <nav
-        className="flex items-center justify-between p-6 lg:px-8"
+        className="navbar-gradient flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <a href="/home" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <img
-              className="h-10 w-auto"
-              src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+              className="h-10 w-auto rounded-lg"
+              src="E.png"
               alt="Your Company Logo"
             />
           </a>
@@ -45,7 +45,7 @@ function Navbar() {
             href="#"
             className="text-base font-semibold leading-6 text-gray-900"
           >
-            Browse
+            Browse Events
           </a>
           <a
             href="#"
@@ -66,11 +66,20 @@ function Navbar() {
             Terms
           </a>
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            {" "}
+            {/* Changed to text-lg */}
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
+          <a
+            href="#"
+            className="text-lg font-semibold rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-indigo-600"
+          >
+            Sign up <span aria-hidden="true">&rarr;</span>
+          </a>
         </div>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end"></div>
       </nav>
       {/* Mobile menu placeholder */}
