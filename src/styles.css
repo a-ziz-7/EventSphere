@@ -61,3 +61,44 @@
     rgb(229, 248, 250) 90%
   );
 }
+.our-team-gradient {
+  background: radial-gradient(
+    circle at 10% 20%,
+    rgb(248, 219, 219) 0%,
+    rgb(229, 248, 250) 90%
+  );
+  height: 100vh; /* Set height to 100% of the viewport */
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange content vertically */
+}
+
+.gradient-text {
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.team-member img {
+  background-color: #f0f0f0; /* Replace with your desired background color */
+  border-radius: 50%;
+  /* ... other styles */
+  margin: 0 auto;
+}
+
+.team-members {
+  display: flex;
+  flex-wrap: nowrap; /* Prevent wrapping */
+  justify-content: center;
+}
+
+.team-member {
+  flex-grow: 1;
+  width: 300px;
+  height: 300px;
+  border-radius: 15px;
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+}

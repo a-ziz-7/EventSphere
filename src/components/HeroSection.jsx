@@ -11,20 +11,7 @@ const HeroSection = () => {
         <div className="container mx-auto text-left h-full flex items-center">
           <div className="w-full">
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-9xl">
-              Welcome to{" "}
-              <span
-                className="gradient-text"
-                style={{
-                  background:
-                    "linear-gradient(to right, #f64f59, #c471ed, #12c2e9)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  color: "transparent", // Ensures no color conflicts
-                }}
-              >
-                EventSphere
-              </span>
+              Welcome to <span className="gradient-text">EventSphere</span>
             </h1>
             <p
               className="text-2xl mb-12 text-white w-full md:w-1/2 lg:w-1/3"
