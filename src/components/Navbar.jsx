@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 ">
       <nav
-        className="navbar-gradient flex items-center justify-between p-6 lg:px-8"
+        className="navbar-footer-gradient flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
