@@ -3,6 +3,9 @@ import Home from "./Home";
 import FrontPage from "./FrontPage";
 import Layout from "./Layout"; // Import the Layout component
 import OurTeam from "./OurTeam";
+import Login from "./Login";
+import Signup from "./Signup";
+import ForgotPassword from "./ForgotPassword";
 import {
   BrowserRouter as Router,
   Route,
@@ -23,6 +26,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           {/* Route for Our Team */}
           <Route path="/team" element={<OurTeam />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/forgotpassword" element={<ForgotPassword />} />
           {/* Redirect to Home if route is not found */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
