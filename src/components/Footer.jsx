@@ -1,36 +1,38 @@
+import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
+
 function Footer() {
   return (
-    <section id="footer navbar-gradient">
-      <div className="container">
-        <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-          <div className="col-md-4 d-flex align-items-center footer-style">
-            <a
-              href="/"
-              className="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1"
-            >
-              <svg className="bi" width="30" height="24">
+    <section
+      id="footer"
+      className="bg-gradient-to-r navbar-footer-gradient mb-0 pb-0"
+    >
+      <div className="container mx-auto mt-4">
+        <footer className="flex flex-wrap justify-between items-center py-6 my-0">
+          <div className="flex items-center">
+            <a href="/" className="text-white text-lg mr-3">
+              <svg className="w-8 h-8">
                 <use xlinkHref="#bootstrap"></use>
               </svg>
             </a>
-            <span className="mb-3 mb-md-0 ">
+            <span className="text-gray-900">
               © 2024 EventSphere Company, Inc
             </span>
           </div>
 
-          <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li className="ms-3">
-              <a href="#">
-                <i className="bi bi-twitter"></i>
+          <ul className="flex space-x-6">
+            <li>
+              <a href="#" className="text-gray-900">
+                <FaTwitter size={24} />
               </a>
             </li>
-            <li className="ms-3">
-              <a href="#">
-                <i className="bi bi-instagram"></i>
+            <li>
+              <a href="#" className="text-gray-900">
+                <FaInstagram size={24} />
               </a>
             </li>
-            <li className="ms-3">
-              <a href="#">
-                <i className="bi bi-facebook"></i>
+            <li>
+              <a href="#" className="text-gray-900">
+                <FaFacebook size={24} />
               </a>
             </li>
           </ul>
@@ -39,4 +41,5 @@ function Footer() {
     </section>
   );
 }
+
 export default Footer;

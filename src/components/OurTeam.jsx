@@ -2,6 +2,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
+import Footer from "./Footer";
 
 function OurTeam() {
   // This array contains data for each team member, feel free to change or add anything
