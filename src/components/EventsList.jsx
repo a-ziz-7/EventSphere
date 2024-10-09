@@ -17,15 +17,19 @@ const EventsList = ({ events }) => {
           <h6 className="mb-1">{event.title}</h6>
           <p className="mb-1">Time: {new Date(event.time).toLocaleString()}</p>
           <p className="mb-1">
-            Attendees: {event.attendees} / {event.limit}
+            Attendees: {event.attendies && event.attendies.length === 0 ? 0 : event.attendies} / {event.capacity}
           </p>
           <p className="mb-1">Address: {event.address}</p>
-          <p className="mb-1">Description: {event.description}</p>
+          <p className="mb-1">
+            Description: {event.description ? event.description : "No description"}
+          </p>
           <p className="mb-1">
             Categories:{" "}
-            {typeof event.categories === "string"
-              ? event.categories.split(", ").join(", ")
-              : event.categories.join(", ")}
+            {event.categories
+              .split(",")
+              .map((category) => category.trim())
+              .map((category) => category.charAt(0).toUpperCase() + category.slice(1))
+              .join(", ")}
           </p>
         </li>
       ))}

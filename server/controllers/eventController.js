@@ -48,8 +48,17 @@ export const createEvent = async (req, res) => {
 };
 
 export const getEvents = async (req, res) => {
+    const { state } = req.query; // Extract the 'state' query parameter
     try {
-        const result = await db.query('SELECT * FROM event');
+        let query = 'SELECT * FROM event';
+        const params = [];
+
+        if (state) {
+            query += ' WHERE state = $1'; // Use parameterized query to prevent SQL injection
+            params.push(state);
+        }
+
+        const result = await db.query(query, params);
         res.json(result.rows);
     } catch (err) {
         console.error('Error fetching events:', err.stack);
@@ -143,6 +152,7 @@ export const editEvent = async (req, res) => {
         res.status(500).send('Server error.');
     }
 };
+
 export const searchEvents = async (req, res) => {
     const { title, address, start, end, category, state } = req.body; // optional fields
 
@@ -204,7 +214,6 @@ export const searchEvents = async (req, res) => {
     }
 };
 
-// Event fetching endpoint (no authentication required)
 export const getEventsCategory = async (req, res) => {
     const { category } = req.params;
 
@@ -369,6 +378,11 @@ async function startSeeding() {
         await seedEvents();
     }, 43200000); // 12 hours
 }
+
+export const getUserLocation = () => {
+    console.log('Getting user location...');
+};
+
 
 // do not need to do it until production
 // startSeeding();

@@ -57,6 +57,10 @@ app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
 
+app.get("/", (req, res) => {
+  res.send(getUserLocation(req));
+});
+
 process.on("SIGINT", () => {
   db.end(() => {
     process.exit(0);
