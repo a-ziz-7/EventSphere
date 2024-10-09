@@ -17,7 +17,8 @@ import {
     createEvent,
     editEvent,
     getEventsCategory,
-    searchEvents
+    searchEvents,
+    getUserLocation
 } from './controllers/eventController.js';
 
 import {
@@ -61,6 +62,10 @@ app.get('/api/developers', getDevelopers);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
+});
+
+app.get('/', (req, res) => {
+    res.send(getUserLocation(req));
 });
 
 process.on('SIGINT', () => {
