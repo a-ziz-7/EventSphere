@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 ">
       <nav
-        className="navbar-gradient flex items-center justify-between p-6 lg:px-8"
+        className="navbar-footer-gradient flex items-center justify-between p-6 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -46,36 +46,45 @@ function Navbar() {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           <a
-            href="#"
+            href="Home"
+            className="text-base font-semibold leading-6 text-gray-900"
+          >
+            Home
+          </a>
+          <a
+            href="browse"
             className="text-base font-semibold leading-6 text-gray-900"
           >
             Browse Events
           </a>
           <a
-            href="#"
+            href="rsvp"
             className="text-base font-semibold leading-6 text-gray-900"
           >
             RSVP
           </a>
           <a
-            href="#"
+            href="team"
             className="text-base font-semibold leading-6 text-gray-900"
           >
             Our Team
           </a>
           <a
-            href="#"
+            href="terms"
             className="text-base font-semibold leading-6 text-gray-900"
           >
             Terms
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
-          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+          <a
+            href="login"
+            className="text-lg font-semibold leading-6 text-gray-900"
+          >
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
           <a
-            href="#"
+            href="signup"
             className="text-lg font-semibold rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline-indigo-600"
           >
             Sign up <span aria-hidden="true">&rarr;</span>
@@ -88,37 +97,43 @@ function Navbar() {
         <div className="lg:hidden navbar-gradient">
           <div className="space-y-2 px-2 pb-3 pt-2">
             <a
-              href="#"
+              href="home"
+              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+            >
+              Home
+            </a>
+            <a
+              href="browse"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Browse Events
             </a>
             <a
-              href="#"
+              href="rsvp"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               RSVP
             </a>
             <a
-              href="#"
+              href="team"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Our Team
             </a>
             <a
-              href="#"
+              href="terms"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Terms
             </a>
             <a
-              href="#"
+              href="login"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Log in
             </a>
             <a
-              href="#"
+              href="signup"
               className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
             >
               Sign up

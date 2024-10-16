@@ -1,48 +1,49 @@
-import dotenv from 'dotenv';
-import cors from 'cors';
-import express from 'express';
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
-import db from './db/db.js';
+import dotenv from "dotenv";
+import cors from "cors";
+import express from "express";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import db from "./db/db.js";
 
 import {
-    registerUser,
-    loginUser,
-    logoutUser,
-    isAuthenticated
-} from './controllers/authController.js';
+  registerUser,
+  loginUser,
+  logoutUser,
+  isAuthenticated,
+} from "./controllers/authController.js";
 
 import {
-    getEvents,
-    createEvent,
-    editEvent,
-    getEventsCategory,
-    searchEvents,
-    searchByRadius,
-    getUserLocation
+  getEvents,
+  createEvent,
+  editEvent,
+  getEventsCategory,
+  searchEvents,
+  searchByRadius,
+  getUserLocation
 } from './controllers/eventController.js';
 
 import {
-    getDevelopers
+  getDevelopers
 } from './controllers/developerController.js';
 
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000; // Default to port 5000 if not set in env
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-// Session middleware setup
-app.use(session({
-    secret: process.env.SESSION_SECRET,
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "default_secret", // Ensure a default secret is used if env variable is missing
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
-}));
+    cookie: { secure: false },
+  })
+);
 
 // User authentication routes
 app.post('/api/auth/register', registerUser);
@@ -60,11 +61,11 @@ app.get('/api/developers', getDevelopers);
 
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
 
-process.on('SIGINT', () => {
-    db.end(() => {
-        process.exit(0);
-    });
+process.on("SIGINT", () => {
+  db.end(() => {
+    process.exit(0);
+  });
 });
