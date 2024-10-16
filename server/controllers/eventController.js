@@ -1,8 +1,52 @@
 import db from '../db/db.js';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+import geoip from 'geoip-lite';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const validCategories = ["academic", "community", "concerts", "festivals", "performing-arts", "sports", "public-holidays", "school-holidays"];
+
+const getLocationFromAddress = async (address) => {
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    // encodeURIComponent(address)
+    const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+
+    try {
+        const response = await axios.get(endpoint);
+
+        const location = response.data;
+        console.log(location);
+        // console.log(`Coordinates for "${address}": Latitude: ${location.lat}, Longitude: ${location.lng}`);
+        return location; // Return the location object
+    } catch (error) {
+        console.error('Error fetching location:', error);
+        return null;
+    }
+};
+
+// Example usage
+(async () => {
+    const address = '1600 Amphitheatre Parkway, Mountain View, CA'; // Change this to the address you want to geocode
+    await getLocationFromAddress(address);
+})();
+
+// post api/events
+// Function to fetch location (latitude, longitude) using Google Geocoding API
+// const getLocationFromAddress = async (address) => {
+//     const apiKey = process.env.GOOGLE_API_KEY; // Set the API key from the .env file
+//     const encodedAddress = encodeURIComponent(address);
+
+//     const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`);
+
+//     if (response.data.status === 'OK') {
+//         const location = response.data.results[0].geometry.location;
+//         return [location.lat, location.lng]; // Return coordinates as [latitude, longitude]
+//     } else {
+//         throw new Error('Error fetching location data');
+//     }
+// };
 
 export const createEvent = async (req, res) => {
     try {
@@ -19,10 +63,13 @@ export const createEvent = async (req, res) => {
         // Generate a new UUID for the event
         const eventId = uuidv4();
 
-        // Insert the event into the database
+        // Fetch location coordinates from the address
+        const location = await getLocationFromAddress(address);
+
+        // Insert the event into the database, including the location (latitude, longitude)
         await db.query(
-            `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, thumbnail)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+            `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, thumbnail, location)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
             [
                 eventId,
                 title,
@@ -35,7 +82,8 @@ export const createEvent = async (req, res) => {
                 categories.join(','), // Convert categories array to comma-separated string
                 duration,
                 state,
-                thumbnail
+                thumbnail,
+                location // Save the location as [latitude, longitude]
             ]
         );
 
@@ -47,6 +95,7 @@ export const createEvent = async (req, res) => {
     }
 };
 
+// gets allllll events, not useful
 export const getEvents = async (req, res) => {
     const { state } = req.query; // Extract the 'state' query parameter
     try {
@@ -66,6 +115,7 @@ export const getEvents = async (req, res) => {
     }
 };
 
+// patch api/events/:eventId
 export const editEvent = async (req, res) => {
     const { eventId } = req.params; // Get the event ID from the URL
     const {
@@ -153,6 +203,7 @@ export const editEvent = async (req, res) => {
     }
 };
 
+// post api/events/search
 export const searchEvents = async (req, res) => {
     const { title, address, start, end, category, state } = req.body; // optional fields
 
@@ -213,6 +264,73 @@ export const searchEvents = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+export const searchByRadius = async (req, res) => {
+    const { userLocation, radius } = req.body; // userLocation is [latitude, longitude] and radius is in kilometers
+
+    try {
+        // Step 1: Query to get all event ids and locations
+        const query = `
+            SELECT id, location 
+            FROM event;
+        `;
+
+        const eventsResult = await db.query(query);
+        const events = eventsResult.rows;
+
+        if (events.length === 0) {
+            return res.status(404).send('No events found.');
+        }
+
+        // Step 2: Calculate the distance between the user's location and each event
+        const [userLat, userLon] = userLocation;
+        const RADIUS_OF_EARTH_KM = 6371;
+
+        const eventsInRange = events.filter(event => {
+            const [eventLat, eventLon] = event.location; // Assuming location is stored as [latitude, longitude]
+
+            // Haversine formula to calculate the distance
+            const dLat = (eventLat - userLat) * (Math.PI / 180);
+            const dLon = (eventLon - userLon) * (Math.PI / 180);
+
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(userLat * (Math.PI / 180)) * Math.cos(eventLat * (Math.PI / 180)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = RADIUS_OF_EARTH_KM * c; // Distance in kilometers
+
+            return distance <= radius;
+        });
+
+        // Get the IDs of the events within the radius
+        const eventIdsInRange = eventsInRange.map(event => event.id);
+
+        if (eventIdsInRange.length === 0) {
+            return res.status(404).send('No events found within the specified radius.');
+        }
+
+        // Step 3: Query the full event details of events within the radius
+        const queryDetails = `
+            SELECT * 
+            FROM event
+            WHERE id = ANY($1::uuid[]);
+        `;
+
+        const eventsDetailsResult = await db.query(queryDetails, [eventIdsInRange]);
+
+        if (eventsDetailsResult.rows.length > 0) {
+            res.json(eventsDetailsResult.rows);
+        } else {
+            res.status(404).send('No events found.');
+        }
+
+    } catch (err) {
+        console.error('Error fetching events by radius:', err.stack);
+        res.status(500).send('Server error');
+    }
+};
+
 
 export const getEventsCategory = async (req, res) => {
     const { category } = req.params;
@@ -333,11 +451,12 @@ async function seedEvents(events) {
                     duration: event.duration,
                     state: event.state,
                     thumbnail: null, // Empty if there is no URL
+                    location: event.location
                 };
 
                 await db.query(
-                    `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, attendies, pictures, duration, state, thumbnail)
-                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+                    `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, attendies, pictures, duration, state, thumbnail, over, location)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
                     [
                         eventData.id,
                         eventData.title,
@@ -353,6 +472,8 @@ async function seedEvents(events) {
                         eventData.duration,
                         eventData.state,
                         eventData.thumbnail,
+                        false,
+                        eventData.location
                     ]
                 );
                 // console.log(`Inserted event: ${event.title}`);
@@ -367,11 +488,14 @@ async function seedEvents(events) {
 }
 
 async function startSeeding() {
+    console.log('Current Time:', new Date().toLocaleString());
     console.log('Seeding events............................................');
     const events1 = await getEventsPredictHQ(0, 2500);
     await seedEvents(events1); // Run initially 1
     const events2 = await getEventsPredictHQ(2500, 5000);
     await seedEvents(events2); // Run initially 2
+    console.log('Current Time:', new Date().toLocaleString());
+    console.log('Seeding events completed................................');
 
     // Set an interval to run seedEvents every 10 minutes (600,000 milliseconds)
     setInterval(async () => {
@@ -379,9 +503,35 @@ async function startSeeding() {
     }, 43200000); // 12 hours
 }
 
-export const getUserLocation = () => {
-    console.log('Getting user location...');
+// startSeeding();
+
+export const getUserLocation = (req, res) => {
+    // Use a sample public IP for testing
+    const ip = '8.8.8.8';  // Google's public DNS IP
+
+    const geo = geoip.lookup(ip);
+    return geo.range;
 };
+
+// export const getUserLocation = (req, res) => {
+//     // Getting the IP address from the request headers or connection
+//     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+
+//     // Lookup location information based on IP
+//     const geo = geoip.lookup(ip);
+
+//     // Checking if geo data is found, else returning an error message
+//     if (geo) {
+//         return res.json({
+//             ip: ip,
+//             location: geo
+//         });
+//     } else {
+//         return res.json({
+//             message: 'Location could not be determined'
+//         });
+//     }
+// };
 
 
 // do not need to do it until production
