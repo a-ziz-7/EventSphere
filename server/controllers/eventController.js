@@ -17,7 +17,7 @@ const getLocationFromAddress = async (address) => {
         const response = await axios.get(endpoint);
 
         const location = response.data;
-        console.log(location);
+        // console.log(location);
         // console.log(`Coordinates for "${address}": Latitude: ${location.lat}, Longitude: ${location.lng}`);
         return location; // Return the location object
     } catch (error) {
