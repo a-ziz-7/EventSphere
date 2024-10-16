@@ -38,9 +38,9 @@ function EventsBrowser() {
     setSearchQuery(event.target.value);
   };
 
-  const toggleSearchBar = () => {
-    setIsSearchBarVisible(!isSearchBarVisible);
-  };
+  //   const toggleSearchBar = () => {
+  //     setIsSearchBarVisible(!isSearchBarVisible);
+  //   };
 
   return (
     <>
