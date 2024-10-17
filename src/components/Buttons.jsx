@@ -33,11 +33,11 @@ function Buttons() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center py-5">
+    <div className="flex flex-col items-center py-5">
       {/* Buttons to select different categories */}
-      <div className="d-flex flex-wrap gap-2 justify-content-center py-3">
+      <div className="flex flex-wrap gap-2 justify-center py-3">
         <button
-          className="btn btn-primary rounded-pill px-3 py-2"
+          className="bg-blue-500 text-white rounded-full px-3 py-2 hover:bg-blue-600 transition duration-200"
           type="button"
           onClick={(e) =>
             handleCategoryClick("Entertainment", e.target.className)
@@ -46,35 +46,35 @@ function Buttons() {
           Festivals/Entertainment
         </button>
         <button
-          className="btn btn-danger rounded-pill px-3 py-2"
+          className="bg-red-500 text-white rounded-full px-3 py-2 hover:bg-red-600 transition duration-200"
           type="button"
           onClick={(e) => handleCategoryClick("Sport", e.target.className)}
         >
           Sport/Fitness
         </button>
         <button
-          className="btn btn-success rounded-pill px-3 py-2"
+          className="bg-green-500 text-white rounded-full px-3 py-2 hover:bg-green-600 transition duration-200"
           type="button"
           onClick={(e) => handleCategoryClick("Community", e.target.className)}
         >
           Community/Social
         </button>
         <button
-          className="btn btn-warning rounded-pill px-3 py-2"
+          className="bg-yellow-500 text-white rounded-full px-3 py-2 hover:bg-yellow-600 transition duration-200"
           type="button"
           onClick={(e) => handleCategoryClick("Concert", e.target.className)}
         >
           Concert/Music
         </button>
         <button
-          className="btn btn-info rounded-pill px-3 py-2"
+          className="bg-blue-300 text-white rounded-full px-3 py-2 hover:bg-blue-400 transition duration-200"
           type="button"
           onClick={(e) => handleCategoryClick("Art", e.target.className)}
         >
           Art/Performances
         </button>
         <button
-          className="btn btn-light rounded-pill px-3 py-2"
+          className="bg-gray-200 text-gray-800 rounded-full px-3 py-2 hover:bg-gray-300 transition duration-200"
           type="button"
           onClick={(e) => handleCategoryClick("Holiday", e.target.className)}
         >

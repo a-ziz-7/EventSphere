@@ -1,45 +1,39 @@
 import { FaTwitter, FaInstagram, FaFacebook } from "react-icons/fa";
 
-function Footer() {
-  return (
-    <section
-      id="footer"
-      className="bg-gradient-to-r navbar-footer-gradient mb-0 pb-0"
-    >
-      <div className="container mx-auto mt-4">
-        <footer className="flex flex-wrap justify-between items-center py-6 my-0">
-          <div className="flex items-center">
-            <a href="/" className="text-white text-lg mr-3">
-              <svg className="w-8 h-8">
-                <use xlinkHref="#bootstrap"></use>
-              </svg>
-            </a>
-            <span className="text-gray-900">
-              © 2024 EventSphere Company, Inc
-            </span>
-          </div>
+// Get current year
+const currentYear = new Date().getFullYear();
 
-          <ul className="flex space-x-6">
-            <li>
-              <a href="#" className="text-gray-900">
-                <FaTwitter size={24} />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-900">
-                <FaInstagram size={24} />
-              </a>
-            </li>
-            <li>
-              <a href="#" className="text-gray-900">
-                <FaFacebook size={24} />
-              </a>
-            </li>
-          </ul>
-        </footer>
+const Footer = () => {
+  return (
+    <footer className="flex bg-gradient-to-r navbar-footer-gradient text-gray-700 py-4 min-h-[7vh] justify-center mt-4">
+      <div className="container mx-auto px-4 flex justify-between items-center">
+        {/* Left Side: Copyright */}
+        <p className="text-sm">© {currentYear} EventSphere Company, Inc</p>
+
+        {/* Right Side: Social Media Icons */}
+        <div className="flex space-x-4">
+          <a
+            href="#"
+            className="hover:text-blue-400 transition-colors duration-300"
+          >
+            <FaTwitter size={24} />
+          </a>
+          <a
+            href="#"
+            className="hover:text-pink-600 transition-colors duration-300"
+          >
+            <FaInstagram size={24} />
+          </a>
+          <a
+            href="#"
+            className="hover:text-blue-400 transition-colors duration-300"
+          >
+            <FaFacebook size={24} />
+          </a>
+        </div>
       </div>
-    </section>
+    </footer>
   );
-}
+};
 
 export default Footer;

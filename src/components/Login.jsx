@@ -24,7 +24,7 @@ function Login() {
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                User name
               </label>
               <div className="mt-2">
                 <input
@@ -33,7 +33,7 @@ function Login() {
                   type="email"
                   required
                   autoComplete="email"
-                  placeholder="Your email address"
+                  placeholder="Your user name"
                   className="block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
