@@ -71,7 +71,7 @@ function OurTeam() {
       name: "Aziz Abdusamiev",
       role: "Developer",
       imgSrc: "E.png",
-      github: "https://github.com/aziz-abdusamiev",
+      github: "https://github.com/a-ziz-7",
       linkedin: "https://linkedin.com/in/aziz-abdusamiev",
     },
     {
