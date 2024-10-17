@@ -92,7 +92,7 @@ function Navbar() {
 
       {/* Mobile menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden navbar-gradient">
+        <div className="lg:hidden navbar-footer-gradient">
           <div className="space-y-2 px-2 pb-3 pt-2">
             <a
               href="home"

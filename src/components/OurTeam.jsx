@@ -1,64 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 function OurTeam() {
-  // This array contains data for each team member, feel free to change or add anything
-  // const teamMembers = [
-  //   {
-  //     name: "Carlo Ace Sagad",
-  //     title: "Developer",
-  //     bio: "",
-  //     image: "person-icon.png",
-  //   },
-  //   {
-  //     name: "Aziz Abdusamiev",
-  //     title: "Developer",
-  //     bio: "",
-  //     image: "person-icon.png",
-  //   },
-  //   {
-  //     name: "Steven Henry",
-  //     title: "Developer",
-  //     bio: "",
-  //     image: "person-icon.png",
-  //   },
-  //   {
-  //     name: "Joel Diaz",
-  //     title: "Developer",
-  //     bio: "",
-  //     image: "person-icon.png",
-  //   },
-  // ];
-  // return (
-  //   <div className=".gradient-background">
-  //     <Navbar />
-  //     <div className="mt-20">
-  //       <h1 classNameName="text-center gradient-text">
-  //         <span classNameName="gradient-text text-center">Meet Our Team</span>
-  //       </h1>
-  //       <div className="row">
-  //         {/* map through the team members and display content */}
-  //         {teamMembers.map((member) => (
-  //           <div className="team-members col-md-3 col-sm-6 mt-5">
-  //             <div classNameName="team-member">
-  //               <img
-  //                 src={member.image}
-  //                 alt={member.name}
-  //                 width="150"
-  //                 height="150"
-  //               />
-  //               <h3>{member.name}</h3>
-  //               <p>{member.title}</p>
-  //               <p>{member.bio}</p>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
   const teamMembers = [
     {
       name: "Carlo Ace Sagad",
@@ -89,10 +35,11 @@ function OurTeam() {
       linkedin: "https://linkedin.com/in/joel-diaz",
     },
   ];
+
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
+      <section className="flex-grow max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
         <div className="text-center pb-12">
           <h2 className="text-base font-bold text-indigo-600 pt-5 mt-4">
             We have the best team!
@@ -134,7 +81,7 @@ function OurTeam() {
                     href={member.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-gray-600 hover:text-gray-800"
+                    className="text-gray-600 hover:text-indigo-700"
                   >
                     <FaLinkedin size={24} />
                   </a>
@@ -144,7 +91,8 @@ function OurTeam() {
           ))}
         </div>
       </section>
-    </>
+      <Footer />
+    </div>
   );
 }
 
