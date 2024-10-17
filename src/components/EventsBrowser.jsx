@@ -8,15 +8,15 @@ function EventsBrowser() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
 
   useEffect(() => {
     // Fetch events data using axios
     const fetchData = async () => {
       try {
-        await axios.get("http://localhost:5000/api/events").then((res) => {
-          setEvents(res.data); // Store events in state
-          setFilteredEvents(res.data); // Initialize filteredEvents with all events
+        await axios.get("http://localhost:5000/api/events").then((response) => {
+          setEvents(response.data); // Store events in state
+          setFilteredEvents(response.data); // Initialize filteredEvents with all events
+          console.log(response.data);
         });
       } catch (error) {
         console.log("Error fetching events: ", error);
@@ -25,22 +25,22 @@ function EventsBrowser() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    // Filter events based on search query only
-    const filtered = events.filter((event) => {
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        event.description.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-    setFilteredEvents(filtered);
-  }, [events, searchQuery]);
+  // useEffect(() => {
+  //   // Filter events based on search query only
+  //   const filtered = events.filter((event) => {
+  //     event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //       event.description.toLowerCase().includes(searchQuery.toLowerCase());
+  //   });
+  //   setFilteredEvents(filtered);
+  // }, [searchQuery]);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
-  //   const toggleSearchBar = () => {
-  //     setIsSearchBarVisible(!isSearchBarVisible);
-  //   };
+  // const toggleSearchBar = () => {
+  //   setIsSearchBarVisible(!isSearchBarVisible);
+  // };
 
   return (
     <>
@@ -60,9 +60,7 @@ function EventsBrowser() {
             </div>
           </div>
           <div className="events-list">
-            {filteredEvents.map((event) => (
-              <EventsList key={event.id} event={event} />
-            ))}
+            <EventsList events={filteredEvents} />
           </div>
         </section>
       </div>
