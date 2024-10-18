@@ -17,10 +17,21 @@ const getLocationFromAddress = async (address) => {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
     const response = await axios.get(endpoint);
+
     const location = response.data.results[0].geometry.location;
     return [location.lat, location.lng]; // Return the location object
 };
 
+// {
+//     "title": "Tech Meetup",
+//     "description": "A meetup for tech enthusiasts to discuss the latest in technology.",
+//     "time": "2024-11-15T18:00:00Z",  // ISO format timestamp
+//     "address": "1010 Kings Hwy, Brooklyn, NY 10001",
+//     "capacity": 100,
+//     "categories": ["Technology", "Networking"],  // Array of categories
+//     "duration": 120,  // Duration in minutes
+//     "state": "New York"  // State where the event is happening
+// }
 export const createEvent = async (req, res) => {
     try {
         // Ensure user is authenticated before proceeding
@@ -37,26 +48,24 @@ export const createEvent = async (req, res) => {
         const eventId = uuidv4();
 
         // Fetch location coordinates from the address
-        const location = await getLocationFromAddress(address);
+        const location = await getLocationFromAddress(address, state);
 
-        // Insert the event into the database, including the location (latitude, longitude)
         await db.query(
-            `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, thumbnail, location)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`,
+            `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, location)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
             [
-                eventId,
-                title,
-                description,
-                new Date(), // created_at set to current time
-                time,
-                address,
-                capacity,
-                user.id, // Set the user_id from the session data
-                categories.join(','), // Convert categories array to comma-separated string
-                duration,
-                state,
-                thumbnail,
-                location // Save the location as [latitude, longitude]
+                eventId, // 1
+                title, // 2
+                description, // 3
+                new Date(), // 4
+                time, // 5
+                address, // 6
+                capacity, // 7
+                user.id, // 8 Set the user_id from the session data
+                categories.join(','), // 9 Convert categories array to comma-separated string
+                duration, // 10
+                state, // 11
+                location // 12
             ]
         );
 
