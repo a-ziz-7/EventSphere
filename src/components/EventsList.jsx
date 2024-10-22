@@ -2,38 +2,46 @@ import React from "react";
 
 const EventsList = ({ events }) => {
   return (
-    <ul className="d-flex flex-wrap justify-content-center list-unstyled mt-3">
-      {events.map((event) => (
-        <li
-          key={event.id}
-          className="mt-2 rounded list-group-item p-2 m-2"
-          style={{
-            fontSize: "0.9rem",
-            width: "300px",
-            margin: "auto",
-            border: "1px solid #ccc",
-          }} 
-        >
-          <h6 className="mb-1">{event.title}</h6>
-          <p className="mb-1">Time: {new Date(event.time).toLocaleString()}</p>
-          <p className="mb-1">
-            Attendees: {event.attendies && event.attendies.length === 0 ? 0 : event.attendies} / {event.capacity}
-          </p>
-          <p className="mb-1">Address: {event.address}</p>
-          <p className="mb-1">
-            Description: {event.description ? event.description : "No description"}
-          </p>
-          <p className="mb-1">
-            Categories:{" "}
-            {event.categories
-              .split(",")
-              .map((category) => category.trim())
-              .map((category) => category.charAt(0).toUpperCase() + category.slice(1))
-              .join(", ")}
-          </p>
-        </li>
-      ))}
-    </ul>
+    <div className="container mx-auto px-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {events.map((event) => (
+          <li
+            key={event.id}
+            className="event-card w-full p-4 rounded shadow-md hover:bg-gray-100 list-none"
+          >
+            <h6 className="mb-1 truncate">{event.title}</h6>
+            <p className="mb-1 text-sm leading-tight">
+              Time: {new Date(event.time).toLocaleString()}
+            </p>
+            <p className="mb-1 text-sm leading-tight truncate">
+              Attendees:{" "}
+              {event.attendies && event.attendies.length === 0
+                ? 0
+                : event.attendies}{" "}
+              / {event.capacity}
+            </p>
+            <p className="mb-1 text-sm leading-tight truncate">
+              Address: {event.address}
+            </p>
+            <p className="mb-1 text-sm leading-tight overflow-hidden truncate hover:truncate-none">
+              Description:{" "}
+              {event.description ? event.description : "No description"}
+            </p>
+            <p className="mb-1 text-sm leading-tight">
+              Categories:{" "}
+              {event.categories
+                .split(",")
+                .map((category) => category.trim())
+                .map(
+                  (category) =>
+                    category.charAt(0).toUpperCase() + category.slice(1)
+                )
+                .join(", ")}
+            </p>
+          </li>
+        ))}
+      </div>
+    </div>
   );
 };
 

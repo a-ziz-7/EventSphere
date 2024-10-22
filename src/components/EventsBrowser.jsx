@@ -8,16 +8,20 @@ function EventsBrowser() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Stored the current page number
+  const pageSize = 20; // Number of events per page
 
   useEffect(() => {
     // Fetch events data using axios
     const fetchData = async () => {
       try {
-        await axios.get("http://localhost:5000/api/events").then((response) => {
-          setEvents(response.data); // Store events in state
-          setFilteredEvents(response.data); // Initialize filteredEvents with all events
-          console.log(response.data);
-        });
+        await axios
+          .get("http://localhost:5000/api/events/all")
+          .then((response) => {
+            setEvents(response.data); // Store events in state
+            setFilteredEvents(response.data); // Initialize filteredEvents with all events
+            console.log(response.data);
+          });
       } catch (error) {
         console.log("Error fetching events: ", error);
       }
@@ -34,9 +38,29 @@ function EventsBrowser() {
   //   setFilteredEvents(filtered);
   // }, [searchQuery]);
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+  // const handleSearchChange = (event) => {
+  //   setSearchQuery(event.target.value);
+  // };
+
+  // Handle next page button click
+  const handleNextPage = () => {
+    if (currentPage * pageSize < events.length) {
+      setCurrentPage(currentPage + 1);
+    }
   };
+  // Handle previous page button click
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  // Calculate start and end indices for the current page
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+
+  // Get the displayed events based on the current page and filtered events
+  const displayedEvents = filteredEvents.slice(startIndex, endIndex);
 
   // const toggleSearchBar = () => {
   //   setIsSearchBarVisible(!isSearchBarVisible);
@@ -45,24 +69,30 @@ function EventsBrowser() {
   return (
     <>
       <div className="container mx-auto min-h-screen">
-        {/* Added min-h-screen to container */}
-        <Navbar className="p-4" />
-        <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12 z-10">
-          <div className="search-bar my-20 relative z-20">
-            <div className="search-bar mb-4">
-              <input
-                type="text"
-                placeholder="Search events..."
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="w-full rounded-md border-gray-300 py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              />
+        <Navbar />
+        <div className="events-list mt-24">
+          <EventsList events={displayedEvents} />
+          <div className="pagination flex justify-between mt-2">
+            <button
+              disabled={currentPage === 1}
+              onClick={handlePrevPage}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+              style={{ display: currentPage === 1 ? "none" : "inline-block" }}
+            >
+              <span>Prev</span>
+            </button>
+            <div className="flex justify-center">
+              {/* Your events list content here */}
             </div>
+            <button
+              disabled={currentPage * pageSize >= events.length}
+              onClick={handleNextPage}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+            >
+              <span>Next</span>
+            </button>
           </div>
-          <div className="events-list">
-            <EventsList events={filteredEvents} />
-          </div>
-        </section>
+        </div>
       </div>
       <Footer />
     </>
