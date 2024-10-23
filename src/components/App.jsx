@@ -14,9 +14,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import Navbar from "./Navbar";
+import { UserProvider } from "./UserContext";
 
 function App() {
   return (
+    <UserProvider>
     <Router>
       <Layout>
         {/*This <Layout> is to have the background color wrap the whole body */}{" "}
@@ -36,6 +38,7 @@ function App() {
         </Routes>
       </Layout>
     </Router>
+    </UserProvider>
   );
 }
 
