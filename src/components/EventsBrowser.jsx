@@ -68,8 +68,8 @@ function EventsBrowser() {
 
   return (
     <>
-      <div className="container mx-auto min-h-screen">
-        <Navbar />
+      <Navbar />
+      <div className="container mx-auto min-h-screen mt-4">
         <div className="events-list mt-24">
           <EventsList events={displayedEvents} />
           <div className="pagination flex justify-between mt-2">
