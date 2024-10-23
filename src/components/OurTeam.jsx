@@ -8,28 +8,28 @@ function OurTeam() {
   const teamMembers = [
     {
       name: "Carlo Ace Sagad",
-      role: "Developer",
+      role: "Front-End Developer",
       imgSrc: "E.png",
       github: "https://github.com/carloace16",
       linkedin: "https://www.linkedin.com/in/carlo-ace-sagad-223a72155/",
     },
     {
       name: "Aziz Abdusamiev",
-      role: "Developer",
+      role: "Back-End Developer",
       imgSrc: "E.png",
       github: "https://github.com/a-ziz-7",
       linkedin: "https://linkedin.com/in/aziz-abdusamiev",
     },
     {
       name: "Steven Henry",
-      role: "Developer",
+      role: "Back-End Developer",
       imgSrc: "E.png",
       github: "https://github.com/steven-henry",
       linkedin: "https://linkedin.com/in/steven-henry",
     },
     {
       name: "Joel Diaz",
-      role: "Developer",
+      role: "Front-End Developer",
       imgSrc: "E.png",
       github: "https://github.com/joel-diaz",
       linkedin: "https://linkedin.com/in/joel-diaz",
