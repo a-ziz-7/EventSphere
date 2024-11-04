@@ -7,7 +7,6 @@ import Footer from "./Footer";
 function EventsBrowser() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Stored the current page number
   const pageSize = 20; // Number of events per page
 

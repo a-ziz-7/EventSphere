@@ -73,13 +73,7 @@ function Buttons() {
         >
           Art/Performances
         </button>
-        <button
-          className="bg-gray-200 text-gray-800 rounded-full px-3 py-2 hover:bg-gray-300 transition duration-200"
-          type="button"
-          onClick={(e) => handleCategoryClick("Holiday", e.target.className)}
-        >
-          Holidays/Family
-        </button>
+
       </div>
 
       {/* Render the list of events once fetched */}

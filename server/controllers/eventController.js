@@ -8,10 +8,6 @@ dotenv.config();
 
 const validCategories = ["academic", "community", "concerts", "festivals", "performing-arts", "sports", "public-holidays", "school-holidays"];
 
-export const getUserLocation = () => {
-    return [-73.9896173, 40.7589663]; // Return a default location for now
-};
-
 // pass in the address and get the location when creating an event
 const getLocationFromAddress = async (address) => {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
@@ -90,8 +86,9 @@ export const getEvents = async (req, res) => {
     }
 };
 
+// Longitude Latitude - has to be flipped
 export const getEventsRadius = async (req, res) => {
-    let userLocation = getUserLocation();
+    let userLocation = req.query.location.split(',').map(Number);
     const eventsInRange = await searchByRadius(userLocation, 25);
     res.json(eventsInRange);
 };
@@ -106,7 +103,11 @@ export const searchByRadius = async (userLocation, radius) => {
         const eventsResult = await db.query(query);
         const events = eventsResult.rows;
 
-        const [userLat, userLon] = userLocation;
+        // console.log(userLocation[0], 123);
+        // const [userLat, userLon] = userLocation;
+        const userLat = userLocation[0];
+        const userLon = userLocation[1];
+        // console.log(userLat, userLon, 123);
         const RADIUS_OF_EARTH_KM = 6371;
 
         const eventsInRange = events.filter(event => {

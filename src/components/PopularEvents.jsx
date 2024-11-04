@@ -27,12 +27,13 @@ function PopularEvents() {
 
   useEffect(() => {
     if (userLocation) {
+      alert(userLocation.lat +"   "+userLocation.lon);
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/events/all"
+            `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
           );
-          console.log("Fetched events:", response.data);
+          console.log("Fetched events:", response.data.length);
           setEvents(response.data);
           filterEvents(response.data);
         } catch (error) {
@@ -56,11 +57,8 @@ function PopularEvents() {
     const nearbyEvents = allEvents.filter((event) => {
       const eventDate = new Date(event.time);
       const isInDateRange = eventDate >= today && eventDate <= tomorrow;
-
-      if (!event.latitude || !event.longitude) {
-        console.warn(`Event missing location data: ${event.title}`);
-        return false;
-      }
+      // console.log(event)
+      // console.log(event.location);
 
       const eventLocation = { lat: event.latitude, lon: event.longitude };
 
@@ -118,11 +116,11 @@ function PopularEvents() {
       <div className="container mx-auto min-h-screen px-4">
         <Navbar />
         <div className="events-list mt-12">
-          <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
+          {/* <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
             {showingNearby
               ? "Nearby Events"
               : "No nearby events found, showing other events in other locations"}
-          </h2>
+          </h2> */}
           <EventsList events={filteredEvents} />
         </div>
       </div>
