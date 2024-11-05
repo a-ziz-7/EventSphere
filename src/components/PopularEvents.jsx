@@ -23,11 +23,13 @@ function PopularEvents() {
         setUserLocation({ lat: 40.7128, lon: -74.006 });
       }
     );
+    console.log(userLocation);
   }, []);
 
   useEffect(() => {
+    console.log(userLocation);
     if (userLocation) {
-      alert(userLocation.lat +"   "+userLocation.lon);
+      // alert(userLocation.lat +"   "+userLocation.lon);
       const fetchData = async () => {
         try {
           const response = await axios.get(
