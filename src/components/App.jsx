@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./Navbar";
 import { UserProvider } from "./UserContext";
+import Terms from "./Terms";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/browse" element={<EventsBrowser />} />
+          <Route path="/terms" element={<Terms />} />
           {/* Redirect to Home if route is not found */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

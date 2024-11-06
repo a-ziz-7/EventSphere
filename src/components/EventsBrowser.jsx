@@ -7,26 +7,45 @@ import Footer from "./Footer";
 function EventsBrowser() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Stored the current page number
   const pageSize = 20; // Number of events per page
+  const [userLocation, setUserLocation] = useState(null);
+
+  useEffect(() => {
+    console.log(123123123123);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserLocation({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
+        console.log("User location: ", userLocation);
+      },
+      (error) => {
+        console.error("Error getting user location: ", error);
+        setUserLocation({ lat: 40.7128, lon: -74.006 });
+      }
+    );
+  }, []);
 
   useEffect(() => {
     // Fetch events data using axios
-    const fetchData = async () => {
-      try {
-        await axios
-          .get("http://localhost:5000/api/events/all")
-          .then((response) => {
-            setEvents(response.data); // Store events in state
-            setFilteredEvents(response.data); // Initialize filteredEvents with all events
-            console.log(response.data);
-          });
-      } catch (error) {
-        console.log("Error fetching events: ", error);
-      }
-    };
-    fetchData();
+    if (userLocation) {
+      async () => {
+        try {
+          console.log(userLocation);
+          await axios
+            .get(`http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`)
+            .then((response) => {
+              setEvents(response.data); // Store events in state
+              setFilteredEvents(response.data); // Initialize filteredEvents with all events
+              console.log(response.data);
+            });
+        } catch (error) {
+          console.log("Error fetching events: ", error);
+        }
+      };
+    }
   }, []);
 
   // useEffect(() => {
