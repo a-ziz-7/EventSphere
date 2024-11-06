@@ -9,7 +9,7 @@ const Login = () => {
   const { login } = useUser();
   const navigate = useNavigate(); 
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const Login = () => {
 
     try {
       const response = await axios.post("/api/auth/login", {
-        user_name: email,
+        username, // use "username" instead of "user_name"
         password,
       });
 
@@ -44,21 +44,21 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-8">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                User name
+                Username
               </label>
               <div className="mt-1">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
+                  id="username"
+                  name="username"
+                  type="text"
                   required
-                  autoComplete="email"
-                  placeholder="Your user name"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  autoComplete="username"
+                  placeholder="Your username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   className="block w-full rounded-md border-0 py-3 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                 />
               </div>
