@@ -38,7 +38,9 @@ function Signup() {
     }
 
     if (!isValidPassword(formData.password)) {
-      setError("Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 number, and 1 special symbol.");
+      setError(
+        "Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 number, and 1 special symbol."
+      );
       return;
     }
 
@@ -73,11 +75,13 @@ function Signup() {
           className="w-full max-w-2xl mx-auto bg-white p-12 rounded-md shadow-md"
           onSubmit={handleSubmit}
         >
-          
           {/* First Name and Last Name */}
           <div className="flex justify-between mb-6">
             <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="first-name">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="first-name"
+              >
                 First Name
               </label>
               <input
@@ -91,7 +95,10 @@ function Signup() {
               />
             </div>
             <div className="w-1/2 ml-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last-name">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="last-name"
+              >
                 Last Name (Optional)
               </label>
               <input
@@ -108,7 +115,10 @@ function Signup() {
 
           {/* Username */}
           <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
               Username
             </label>
             <input
@@ -125,7 +135,10 @@ function Signup() {
           {/* Email and Phone */}
           <div className="flex justify-between mb-6">
             <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
                 Email
               </label>
               <input
@@ -139,7 +152,10 @@ function Signup() {
               />
             </div>
             <div className="w-1/2 ml-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="phone"
+              >
                 Phone Number (Optional)
               </label>
               <input
@@ -157,7 +173,10 @@ function Signup() {
           {/* Password and Confirm Password */}
           <div className="flex justify-between mb-6">
             <div className="w-1/2 mr-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password"
+              >
                 Password
               </label>
               <input
@@ -171,7 +190,10 @@ function Signup() {
               />
             </div>
             <div className="w-1/2 ml-2">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirm-password">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="confirm-password"
+              >
                 Confirm Password
               </label>
               <input
