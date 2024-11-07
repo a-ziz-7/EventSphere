@@ -7,9 +7,9 @@ import axios from "axios";
 function Signup() {
   const { login } = useUser(); // Get the login function from UserContext
   const [formData, setFormData] = useState({
+    username: "",
     firstName: "",
     lastName: "",
-    username: "",
     email: "",
     phone: "",
     password: "",
@@ -44,14 +44,15 @@ function Signup() {
 
     try {
       // Make the POST request to the /api/auth/register route
-      const response = await axios.post("/api/auth/register", {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        username: formData.username,
+      const response = await axios.post("http://localhost:5000/api/auth/register", {
+        user_name: formData.username,
+        first_name: formData.firstName,
+        last_name: formData.lastName,
         email: formData.email,
         phone: formData.phone,
         password: formData.password,
       });
+      alert(response.data); // Assuming the server returns a success message
 
       // Log in the user after successful registration
       login(response.data.user); // Assuming the server returns user data in response
