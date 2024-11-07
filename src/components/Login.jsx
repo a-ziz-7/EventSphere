@@ -20,9 +20,9 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/auth/login", {
-        username, // use "username" instead of "user_name"
-        password,
+      const response = await axios.post("http://localhost:5000/api/auth/login", {
+        user_name: username, // use "username" instead of "user_name"
+        password: password,
       });
 
       login(response.data.user);

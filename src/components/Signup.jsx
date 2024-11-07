@@ -52,7 +52,7 @@ function Signup() {
         phone: formData.phone,
         password: formData.password,
       });
-      alert(response.data); // Assuming the server returns a success message
+      // alert(response.data); // Assuming the server returns a success message
 
       // Log in the user after successful registration
       login(response.data.user); // Assuming the server returns user data in response
