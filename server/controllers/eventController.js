@@ -472,7 +472,7 @@ async function startSeeding() {
     }, 43200000); // 12 hours
 }
 
-startSeeding();
+// startSeeding();
 
 
 // export const getUserLocation = (req, res) => {
