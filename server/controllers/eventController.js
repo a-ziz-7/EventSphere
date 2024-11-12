@@ -89,8 +89,12 @@ export const getEvents = async (req, res) => {
 // Longitude Latitude - has to be flipped
 export const getEventsRadius = async (req, res) => {
     let userLocation = req.query.location.split(',').map(Number);
+    // console.log(userLocation);
     const eventsInRange = await searchByRadius(userLocation, 25);
-    res.json(eventsInRange);
+    // console.log(eventsInRange.length);
+    // console.log((await fututeEvents(eventsInRange)).length);
+    const futureEventsInRange = await fututeEvents(eventsInRange);
+    res.json(futureEventsInRange);
 };
 
 export const searchByRadius = async (userLocation, radius) => {
@@ -320,6 +324,12 @@ export const getEventsCategory = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+async function fututeEvents(events) {
+    const currentDate = new Date();
+    const futureEvents = events.filter(event => new Date(event.time) > currentDate);
+    return futureEvents;
+}
 
 async function getEventsPredictHQ(start = 0, stop = 2500) {
     const url = 'https://api.predicthq.com/v1/events/';

@@ -8,61 +8,47 @@ function EventsBrowser() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Stored the current page number
-  const pageSize = 20; // Number of events per page
+  const pageSize = 16; // Number of events per page
   const [userLocation, setUserLocation] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(123123123123);
     navigator.geolocation.getCurrentPosition(
       (position) => {
         setUserLocation({
           lat: position.coords.latitude,
           lon: position.coords.longitude,
         });
-        console.log("User location: ", userLocation);
-      },
-      (error) => {
-        console.error("Error getting user location: ", error);
-        setUserLocation({ lat: 40.7128, lon: -74.006 });
       }
     );
   }, []);
 
   useEffect(() => {
-    // Fetch events data using axios
+    console.log("User location: ", userLocation);
     if (userLocation) {
-      async () => {
+      const fetchData = async () => {
         try {
-          console.log(userLocation);
-          await axios
-            .get(`http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`)
-            .then((response) => {
-              setEvents(response.data); // Store events in state
-              setFilteredEvents(response.data); // Initialize filteredEvents with all events
-              console.log(response.data);
-            });
+          const response = await axios.get(
+            `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
+          );
+          console.log("Fetched events:", response.data.length);
+          const sortedEvents = response.data.sort((a, b) => new Date(a.time) - new Date(b.time));
+          setEvents(sortedEvents);
+          setFilteredEvents(sortedEvents);
         } catch (error) {
           console.log("Error fetching events: ", error);
+        } finally {
+          setLoading(false);
         }
       };
+      fetchData();
     }
-  }, []);
-
-  // useEffect(() => {
-  //   // Filter events based on search query only
-  //   const filtered = events.filter((event) => {
-  //     event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //       event.description.toLowerCase().includes(searchQuery.toLowerCase());
-  //   });
-  //   setFilteredEvents(filtered);
-  // }, [searchQuery]);
-
-  // const handleSearchChange = (event) => {
-  //   setSearchQuery(event.target.value);
-  // };
+    console.log("Events: ", events);
+  }, [userLocation]);
 
   // Handle next page button click
   const handleNextPage = () => {
+    console.log("Current page: ", currentPage);
     if (currentPage * pageSize < events.length) {
       setCurrentPage(currentPage + 1);
     }
@@ -80,10 +66,15 @@ function EventsBrowser() {
 
   // Get the displayed events based on the current page and filtered events
   const displayedEvents = filteredEvents.slice(startIndex, endIndex);
+  console.log("Displayed events: ", displayedEvents);
 
-  // const toggleSearchBar = () => {
-  //   setIsSearchBarVisible(!isSearchBarVisible);
-  // };
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-gray-700 text-lg font-bold">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <>
@@ -100,9 +91,11 @@ function EventsBrowser() {
             >
               <span>Prev</span>
             </button>
+
             <div className="flex justify-center">
               {/* Your events list content here */}
             </div>
+
             <button
               disabled={currentPage * pageSize >= events.length}
               onClick={handleNextPage}
