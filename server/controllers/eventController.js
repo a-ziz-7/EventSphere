@@ -89,10 +89,7 @@ export const getEvents = async (req, res) => {
 // Longitude Latitude - has to be flipped
 export const getEventsRadius = async (req, res) => {
     let userLocation = req.query.location.split(',').map(Number);
-    // console.log(userLocation);
     const eventsInRange = await searchByRadius(userLocation, 25);
-    // console.log(eventsInRange.length);
-    // console.log((await fututeEvents(eventsInRange)).length);
     const futureEventsInRange = await fututeEvents(eventsInRange);
     res.json(futureEventsInRange);
 };
@@ -107,17 +104,13 @@ export const searchByRadius = async (userLocation, radius) => {
         const eventsResult = await db.query(query);
         const events = eventsResult.rows;
 
-        // console.log(userLocation[0], 123);
-        // const [userLat, userLon] = userLocation;
         const userLat = userLocation[0];
         const userLon = userLocation[1];
-        // console.log(userLat, userLon, 123);
         const RADIUS_OF_EARTH_KM = 6371;
 
         const eventsInRange = events.filter(event => {
             radius = 25;
-            const [eventLat, eventLon] = event.location; // Assuming location is stored as [latitude, longitude]
-            // Haversine formula to calculate the distance
+            const [eventLat, eventLon] = event.location;
             const dLat = (eventLat - userLat) * (Math.PI / 180);
             const dLon = (eventLon - userLon) * (Math.PI / 180);
 
@@ -474,14 +467,12 @@ async function startSeeding() {
     await seedEvents(events2); // Run initially 2
     console.log('Current Time:', new Date().toLocaleString());
     console.log('Seeding events completed................................');
-
-    // Set an interval to run seedEvents every 10 minutes (600,000 milliseconds)
     setInterval(async () => {
         await seedEvents();
     }, 43200000); // 12 hours
 }
 
-// startSeeding();
+startSeeding();
 
 
 // export const getUserLocation = (req, res) => {

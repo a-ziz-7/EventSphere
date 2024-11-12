@@ -29,7 +29,7 @@ import {
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000; // Default to port 5000 if not set in env
+const port = process.env.PORT || 3000; // Default to port 5000 if not set in env
 
 app.use(cors());
 app.use(express.json());
