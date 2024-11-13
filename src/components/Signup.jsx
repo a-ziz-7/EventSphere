@@ -24,7 +24,8 @@ function Signup() {
 
   // Password validation function using regex
   const isValidPassword = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/;
     return passwordRegex.test(password);
   };
 
@@ -46,14 +47,17 @@ function Signup() {
 
     try {
       // Make the POST request to the /api/auth/register route
-      const response = await axios.post("http://localhost:5000/api/auth/register", {
-        user_name: formData.username,
-        first_name: formData.firstName,
-        last_name: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        password: formData.password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        {
+          user_name: formData.username,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          password: formData.password,
+        }
+      );
       // alert(response.data); // Assuming the server returns a success message
 
       // Log in the user after successful registration
