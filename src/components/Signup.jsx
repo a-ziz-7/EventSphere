@@ -40,7 +40,7 @@ function Signup() {
 
     if (!isValidPassword(formData.password)) {
       setError(
-        "Password must be at least 8 characters long and contain at least 1 uppercase letter, 1 number, and 1 special symbol."
+        "Password must be at least  8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character:."
       );
       return;
     }
@@ -65,7 +65,7 @@ function Signup() {
       alert("Signup successful!");
     } catch (err) {
       console.error("Signup failed:", err);
-      setError("Failed to register. Please try again.");
+      setError(err.response?.data || "Failed to register. Please try again");
     }
   };
 
