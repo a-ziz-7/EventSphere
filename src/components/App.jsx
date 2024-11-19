@@ -7,6 +7,8 @@ import EventsBrowser from "./EventsBrowser";
 import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
+import Create from "./Create";
+import RSVP from "./RSVP"
 import {
   BrowserRouter as Router,
   Route,
@@ -35,6 +37,8 @@ function App() {
           <Route path="/forgotpassword" element={<ForgotPassword />} />
           <Route path="/browse" element={<EventsBrowser />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/rsvp" element={<RSVP />} />
           {/* Redirect to Home if route is not found */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

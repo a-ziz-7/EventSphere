@@ -14,7 +14,7 @@ function Buttons() {
     if (category) {
       // Make an API call to get events for the selected category
       axios
-        .get(`http://localhost:5000/api/events/${category}`)
+        .get(`http://localhost:5000/api/events/category/${category}`)
         .then((response) => {
           setEvents(response.data); // Store the events in state
         })

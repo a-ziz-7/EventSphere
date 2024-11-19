@@ -68,6 +68,12 @@ function Navbar() {
             Our Team
           </a>
           <a
+            href="create"
+            className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Create Event
+          </a>
+          <a
             href="terms"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >

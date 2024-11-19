@@ -13,6 +13,7 @@ import {
 } from "./controllers/authController.js";
 
 import {
+  eventInfo,
   getEvents,
   createEvent,
   editEvent,
@@ -49,12 +50,13 @@ app.post('/api/auth/register', registerUser);
 app.post('/api/auth/login', loginUser);
 app.post('/api/auth/logout', isAuthenticated, logoutUser);
 // Event routes
+app.get('/api/events/:eventId', eventInfo);
 app.get('/api/events/all', getEvents);
 app.get('/api/events', getEventsRadius);
 app.post('/api/events', isAuthenticated, createEvent);
 app.patch('/api/events/:eventId', isAuthenticated, editEvent);
 app.get('/api/events/search', searchEvents);
-app.get('/api/events/:category', getEventsCategory);
+app.get('/api/events/category/:category', getEventsCategory);
 // Test route
 app.get('/api/developers', getDevelopers);
 

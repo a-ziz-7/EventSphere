@@ -18,6 +18,22 @@ const getLocationFromAddress = async (address) => {
     return [location.lat, location.lng]; // Return the location object
 };
 
+export const eventInfo = async (req, res) => {
+    const eventId = req.params.eventId;
+    try {
+        const result = await db.query('SELECT * FROM event WHERE id = $1', [eventId]);
+
+        if (result.rows.length > 0) {
+            res.json(result.rows[0]);
+        } else {
+            res.status(404).send('Event not found.');
+        }
+    } catch (err) {
+        console.error('Error fetching event:', err.stack);
+        res.status(500).send('Server error');
+    }
+}
+
 // {
 //     "title": "Tech Meetup",
 //     "description": "A meetup for tech enthusiasts to discuss the latest in technology.",
@@ -471,30 +487,6 @@ async function startSeeding() {
         await seedEvents();
     }, 43200000); // 12 hours
 }
-
-// startSeeding();
-
-
-// export const getUserLocation = (req, res) => {
-//     // Getting the IP address from the request headers or connection
-//     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-//     // Lookup location information based on IP
-//     const geo = geoip.lookup(ip);
-
-//     // Checking if geo data is found, else returning an error message
-//     if (geo) {
-//         return res.json({
-//             ip: ip,
-//             location: geo
-//         });
-//     } else {
-//         return res.json({
-//             message: 'Location could not be determined'
-//         });
-//     }
-// };
-
 
 // do not need to do it until production
 // startSeeding();
