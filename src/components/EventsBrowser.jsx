@@ -13,14 +13,12 @@ function EventsBrowser() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      }
-    );
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLocation({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -32,7 +30,9 @@ function EventsBrowser() {
             `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
           );
           console.log("Fetched events:", response.data.length);
-          const sortedEvents = response.data.sort((a, b) => new Date(a.time) - new Date(b.time));
+          const sortedEvents = response.data.sort(
+            (a, b) => new Date(a.time) - new Date(b.time)
+          );
           setEvents(sortedEvents);
           setFilteredEvents(sortedEvents);
         } catch (error) {
@@ -78,7 +78,7 @@ function EventsBrowser() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="container mx-auto min-h-screen mt-4">
         <div className="events-list mt-24">
           <EventsList events={displayedEvents} />

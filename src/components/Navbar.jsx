@@ -44,37 +44,37 @@ function Navbar() {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           <a
-            href="Home"
+            href="/Home"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Home
           </a>
           <a
-            href="browse"
+            href="/browse"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Browse Events
           </a>
           <a
-            href="rsvp"
+            href="/rsvp"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             RSVP
           </a>
           <a
-            href="team"
+            href="/team"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Our Team
           </a>
           <a
-            href="create"
+            href="/create"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Create Event
           </a>
           <a
-            href="terms"
+            href="/terms"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Terms
@@ -82,13 +82,13 @@ function Navbar() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
           <a
-            href="login"
+            href="/login"
             className="text-lg font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out"
           >
             Log in
           </a>
           <a
-            href="signup"
+            href="/signup"
             className="text-lg font-semibold rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 transition duration-300 ease-in-out"
           >
             Sign up
@@ -101,43 +101,43 @@ function Navbar() {
         <div className="lg:hidden navbar-footer-gradient">
           <div className="space-y-2 px-2 pb-3 pt-2">
             <a
-              href="home"
+              href="/home"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Home
             </a>
             <a
-              href="browse"
+              href="/browse"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Browse Events
             </a>
             <a
-              href="rsvp"
+              href="/rsvp"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               RSVP
             </a>
             <a
-              href="team"
+              href="/team"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Our Team
             </a>
             <a
-              href="terms"
+              href="/terms"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Terms
             </a>
             <a
-              href="login"
+              href="/login"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Log in
             </a>
             <a
-              href="signup"
+              href="/signup"
               className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
             >
               Sign up

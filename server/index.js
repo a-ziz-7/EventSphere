@@ -19,13 +19,10 @@ import {
   editEvent,
   getEventsCategory,
   searchEvents,
-  getEventsRadius
-} from './controllers/eventController.js';
+  getEventsRadius,
+} from "./controllers/eventController.js";
 
-import {
-  getDevelopers
-} from './controllers/developerController.js';
-
+import { getDevelopers } from "./controllers/developerController.js";
 
 dotenv.config();
 
@@ -46,9 +43,9 @@ app.use(
 );
 
 // User authentication routes
-app.post('/api/auth/register', registerUser);
-app.post('/api/auth/login', loginUser);
-app.post('/api/auth/logout', isAuthenticated, logoutUser);
+app.post("/api/auth/register", registerUser);
+app.post("/api/auth/login", loginUser);
+app.post("/api/auth/logout", isAuthenticated, logoutUser);
 // Event routes
 app.get('/api/events/:eventId', eventInfo);
 app.get('/api/events/all', getEvents);
@@ -59,8 +56,7 @@ app.patch('/api/events/:eventId', isAuthenticated, editEvent);
 app.get('/api/events/search', searchEvents);
 app.get('/api/events/category/:category', getEventsCategory);
 // Test route
-app.get('/api/developers', getDevelopers);
-
+app.get("/api/developers", getDevelopers);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
