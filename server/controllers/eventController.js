@@ -3,6 +3,7 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 import geoip from 'geoip-lite';
 import dotenv from 'dotenv';
+import { CgWebcam } from 'react-icons/cg';
 
 dotenv.config();
 
@@ -34,24 +35,16 @@ export const eventInfo = async (req, res) => {
     }
 }
 
-// {
-//     "title": "Tech Meetup",
-//     "description": "A meetup for tech enthusiasts to discuss the latest in technology.",
-//     "time": "2024-11-15T18:00:00Z",  // ISO format timestamp
-//     "address": "1010 Kings Hwy, Brooklyn, NY 10001",
-//     "capacity": 100,
-//     "categories": ["Technology", "Networking"],  // Array of categories
-//     "duration": 120,  // Duration in minutes
-//     "state": "New York"  // State where the event is happening
-// }
 export const createEvent = async (req, res) => {
     try {
-        // Ensure user is authenticated before proceeding
-        const user = req.session.user;
+        console.log(req.cookies.ajs_anonymous_id);
+        const user = req.cookies.ajs_anonymous_id;
 
         if (!user) {
             return res.status(401).send('Unauthorized');
         }
+
+        console.log(req.body);
 
         // Extract event details from the request body
         const { title, description, time, address, capacity, categories, duration, state, thumbnail = null } = req.body;
@@ -59,12 +52,16 @@ export const createEvent = async (req, res) => {
         // Generate a new UUID for the event
         const eventId = uuidv4();
 
-        // Fetch location coordinates from the address
-        const location = await getLocationFromAddress(address, state);
+        // Fetch location coordinates from the addresss
+        // const location = await getLocationFromAddress(address);
+        const location = [0, 0];
 
         await db.query(
-            `INSERT INTO event (id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, location)
-             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
+            `INSERT INTO event (
+                id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, location, thumbnail
+            ) VALUES (
+                $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
+            )`,
             [
                 eventId, // 1
                 title, // 2
@@ -73,11 +70,12 @@ export const createEvent = async (req, res) => {
                 time, // 5
                 address, // 6
                 capacity, // 7
-                user.id, // 8 Set the user_id from the session data
+                user, // 8 Set the user_id from the session data
                 categories.join(','), // 9 Convert categories array to comma-separated string
                 duration, // 10
                 state, // 11
-                location // 12
+                location, // 12
+                thumbnail // 13
             ]
         );
 
@@ -88,6 +86,7 @@ export const createEvent = async (req, res) => {
         res.status(500).send('Error creating event.');
     }
 };
+
 
 // gets allllll events, not useful
 export const getEvents = async (req, res) => {

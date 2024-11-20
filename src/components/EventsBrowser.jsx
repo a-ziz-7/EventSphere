@@ -24,7 +24,7 @@ function EventsBrowser() {
   }, []);
 
   useEffect(() => {
-    console.log("User location: ", userLocation);
+    // console.log("User location: ", userLocation);
     if (userLocation) {
       const fetchData = async () => {
         try {
@@ -43,12 +43,12 @@ function EventsBrowser() {
       };
       fetchData();
     }
-    console.log("Events: ", events);
+    // console.log("Events: ", events);
   }, [userLocation]);
 
   // Handle next page button click
   const handleNextPage = () => {
-    console.log("Current page: ", currentPage);
+    // console.log("Current page: ", currentPage);
     if (currentPage * pageSize < events.length) {
       setCurrentPage(currentPage + 1);
     }
@@ -66,7 +66,7 @@ function EventsBrowser() {
 
   // Get the displayed events based on the current page and filtered events
   const displayedEvents = filteredEvents.slice(startIndex, endIndex);
-  console.log("Displayed events: ", displayedEvents);
+  // console.log("Displayed events: ", displayedEvents);
 
   if (loading) {
     return (
