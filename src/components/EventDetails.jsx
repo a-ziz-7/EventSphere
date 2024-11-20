@@ -28,16 +28,19 @@ function EventDetails() {
 
   if (error) {
     return (
-      <div className="container mx-auto px-4 mt-24">
-        {" "}
-        Error Fetching event: {error.message}
+      <div className="container mx-auto px-4 mt-24 text-center">
+        <p className="text-red-600 font-bold">Error Fetching Event:</p>
+        <p className="text-gray-700">{error.message}</p>
       </div>
     );
   }
 
   if (isLoading) {
-    console.log(isLoading);
-    return <div className="container mx-auto px-4 mt-24">Loading event...</div>;
+    return (
+      <div className="container mx-auto px-4 mt-24 text-center">
+        <p className="text-gray-700 font-semibold">Loading event...</p>
+      </div>
+    );
   }
 
   const eventDate = new Date(event.time).toLocaleDateString("en-US", {
@@ -56,39 +59,46 @@ function EventDetails() {
 
   return (
     <div>
+      <Navbar />
       <div className="container mx-auto px-4 mt-24">
-        <div className="event-details flex flex-wrap">
-          <div className="event-image w-full md:w-1/2 mb-4 md:mb-0">
+        <div className="event-details flex flex-wrap items-center">
+          {/* Event Image */}
+          <div className="event-image w-full md:w-1/2">
             <img
-              src={"party.jpg"} // Replace with your image path
+              src={"/E.png"} // Correct file path
               alt={event.title}
-              className="w-full rounded-lg mb-4"
+              className="w-full h-auto rounded-lg shadow-md"
             />
           </div>
+
+          {/* Event Info */}
           <div className="event-info w-full md:w-1/2 px-4">
-            <h1 className="text-4xl font-bold mb-2">{event.title}</h1>
-            <div className="event-details-info">
-              <p className="text-gray-700">
-                <span className="font-bold">Date:</span> {eventDate}
+            <h1 className="text-4xl font-extrabold mb-4">{event.title}</h1>
+            <div className="event-details-info space-y-2">
+              <p className="text-gray-800 text-lg">
+                <span className="font-semibold">Date:</span> {eventDate}
               </p>
-              <p className="text-gray-700">
-                <span className="font-bold">Time:</span> {formattedEventTime}
+              <p className="text-gray-800 text-lg">
+                <span className="font-semibold">Time:</span>{" "}
+                {formattedEventTime}
               </p>
-              <p className="text-gray-700">
-                <span className="font-bold">Location:</span> {event.address}
+              <p className="text-gray-800 text-lg">
+                <span className="font-semibold">Location:</span> {event.address}
               </p>
             </div>
-            <div className="event-description mt-4">
-              <h2 className="text-2xl font-bold mb-2">About the Event</h2>
-              <p className="text-gray-700 text-lg leading-relaxed">
+            <div className="event-description mt-6">
+              <h2 className="text-2xl font-bold mb-3">About the Event</h2>
+              <p className="text-gray-700 text-base leading-relaxed">
                 {event.description}
               </p>
             </div>
-            <div className="actions mt-4">
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+
+            {/* Action Buttons */}
+            <div className="actions mt-6 flex flex-wrap gap-4">
+              <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md">
                 Join Waitlist
               </button>
-              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md">
                 Buy Tickets
               </button>
             </div>
