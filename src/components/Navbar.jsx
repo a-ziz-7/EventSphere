@@ -14,7 +14,7 @@ function Navbar() {
             <span className="sr-only">Your Company</span>
             <img
               className="h-10 w-auto rounded-lg"
-              src="E.png"
+              src="/E.png"
               alt="Your Company Logo"
             />
           </a>
