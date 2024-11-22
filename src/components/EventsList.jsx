@@ -1,20 +1,14 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 
 const EventsList = ({ events }) => {
-  const navigate = useNavigate();
-
-  const handleEventClick = (eventId) => {
-    navigate(`/event/${eventId}`);
-  };
-
   return (
     <div className="container mx-auto px-4">
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {events.map((event) => (
-          <Link
-            to={`/event/${event.id}`}
-            onClick={() => handleEventClick(event.id)}
+          <a
+            href={`/event/${event.id}`} // Use href for navigation
+            target="_blank" // Open in a new tab
+            rel="noopener noreferrer" // Ensure security
             className="no-underline"
             key={event.id} // Ensure unique key here
           >
@@ -68,7 +62,7 @@ const EventsList = ({ events }) => {
                 </span>
               </p>
             </li>
-          </Link>
+          </a>
         ))}
       </ul>
     </div>
