@@ -45,37 +45,37 @@ function Buttons({ setIsCategorySelected }) {
 
   return (
     <div className="flex flex-col items-center py-5">
-      <div className="flex flex-wrap gap-2 justify-center py-3">
+      <div className="flex flex-wrap gap-4 justify-center py-3">
         <button
-          className="bg-blue-500 text-white rounded-full px-3 py-2 hover:bg-blue-600 transition duration-200"
+          className="bg-indigo-500 text-white rounded-lg px-5 py-3 hover:bg-indigo-600 transition duration-300 transform hover:scale-105"
           type="button"
           onClick={() => handleCategoryClick("Entertainment")}
         >
           Festivals/Entertainment
         </button>
         <button
-          className="bg-red-500 text-white rounded-full px-3 py-2 hover:bg-red-600 transition duration-200"
+          className="bg-red-500 text-white rounded-lg px-5 py-3 hover:bg-red-600 transition duration-300 transform hover:scale-105"
           type="button"
           onClick={() => handleCategoryClick("Sport")}
         >
           Sport/Fitness
         </button>
         <button
-          className="bg-green-500 text-white rounded-full px-3 py-2 hover:bg-green-600 transition duration-200"
+          className="bg-green-500 text-white rounded-lg px-5 py-3 hover:bg-green-600 transition duration-300 transform hover:scale-105"
           type="button"
           onClick={() => handleCategoryClick("Community")}
         >
           Community/Social
         </button>
         <button
-          className="bg-yellow-500 text-white rounded-full px-3 py-2 hover:bg-yellow-600 transition duration-200"
+          className="bg-yellow-500 text-white rounded-lg px-5 py-3 hover:bg-yellow-600 transition duration-300 transform hover:scale-105"
           type="button"
           onClick={() => handleCategoryClick("Concert")}
         >
           Concert/Music
         </button>
         <button
-          className="bg-blue-300 text-white rounded-full px-3 py-2 hover:bg-blue-400 transition duration-200"
+          className="bg-blue-400 text-white rounded-lg px-5 py-3 hover:bg-blue-500 transition duration-300 transform hover:scale-105"
           type="button"
           onClick={() => handleCategoryClick("Art")}
         >
@@ -91,21 +91,21 @@ function Buttons({ setIsCategorySelected }) {
               currentPage * pageSize
             )}
           />
-          <div className="pagination flex justify-between mt-2">
+          <div className="pagination flex justify-between mt-6 items-center">
             <button
               onClick={handlePrevPage}
               disabled={currentPage === 1}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+              className="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-l hover:bg-gray-400 transition duration-200"
             >
               Prev
             </button>
-            <div className="text-center">
+            <div className="text-center font-medium">
               {currentPage} / {totalPages} pages
             </div>
             <button
               onClick={handleNextPage}
               disabled={currentPage === totalPages}
-              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+              className="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-r hover:bg-gray-400 transition duration-200"
             >
               Next
             </button>
