@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EventsList from "./EventsList";
 import Navbar from "./Navbar";
+import popularEventImages from "./popularEventImages";
 
 function PopularEvents() {
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -15,24 +16,30 @@ function PopularEvents() {
         lon: position.coords.longitude,
       });
     });
-    // console.log(userLocation);
   }, []);
 
   useEffect(() => {
-    console.log(userLocation);
     if (userLocation) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
             `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
           );
-          console.log("Fetched events:", response.data.length);
           const sortedEvents = response.data.sort(
             (a, b) => new Date(a.time) - new Date(b.time)
           );
-          setFilteredEvents(sortedEvents.slice(0, 16));
+
+          // Map the 16 images to the top 16 events
+          const eventsWithImages = sortedEvents
+            .slice(0, 16)
+            .map((event, index) => ({
+              ...event,
+              image: popularEventImages[index] || null, // Assign images only if available
+            }));
+
+          setFilteredEvents(eventsWithImages);
         } catch (error) {
-          console.log("Error fetching events: ", error);
+          console.error("Error fetching events: ", error);
         } finally {
           setLoading(false);
         }
@@ -54,11 +61,6 @@ function PopularEvents() {
       <div className="container mx-auto min-h-screen px-4">
         <Navbar />
         <div className="events-list mt-12">
-          {/* <h2 className="text-center text-2xl font-semibold text-gray-800 mb-4">
-            {showingNearby
-              ? "Nearby Events"
-              : "No nearby events found, showing other events in other locations"}
-          </h2> */}
           <EventsList events={filteredEvents} />
         </div>
       </div>

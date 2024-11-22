@@ -1,7 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 const EventsList = ({ events }) => {
   const navigate = useNavigate();
+
   const handleEventClick = (eventId) => {
     navigate(`/event/${eventId}`);
   };
@@ -14,12 +16,17 @@ const EventsList = ({ events }) => {
             to={`/event/${event.id}`}
             onClick={() => handleEventClick(event.id)}
             className="no-underline"
+            key={event.id} // Ensure unique key here
           >
-            <li
-              key={event.id}
-              // onClick={() => handleCardClick(event.id)}
-              className="event-card w-full p-4 rounded-lg shadow-md transition-transform duration-300 ease-in-out bg-white border border-gray-300 hover:bg-blue-200 hover:shadow-xl hover:border-blue-400 transform hover:-translate-y-1 cursor-pointer"
-            >
+            <li className="event-card w-full p-4 rounded-lg shadow-md transition-transform duration-300 ease-in-out bg-white border border-gray-300 hover:bg-blue-200 hover:shadow-xl hover:border-blue-400 transform hover:-translate-y-1 cursor-pointer">
+              {/* Display Image if Available */}
+              {event.image && (
+                <img
+                  src={event.image}
+                  alt={event.title}
+                  className="w-full h-40 object-cover mb-4 rounded-md"
+                />
+              )}
               <h6 className="mb-1 font-medium text-blue-800 truncate">
                 {event.title}
               </h6>
