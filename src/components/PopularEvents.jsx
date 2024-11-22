@@ -9,14 +9,12 @@ function PopularEvents() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        });
-      }
-    );
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLocation({
+        lat: position.coords.latitude,
+        lon: position.coords.longitude,
+      });
+    });
     // console.log(userLocation);
   }, []);
 
@@ -29,8 +27,10 @@ function PopularEvents() {
             `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
           );
           console.log("Fetched events:", response.data.length);
-          const sortedEvents = response.data.sort((a, b) => new Date(a.time) - new Date(b.time));
-          setFilteredEvents(sortedEvents.slice(0, 28));
+          const sortedEvents = response.data.sort(
+            (a, b) => new Date(a.time) - new Date(b.time)
+          );
+          setFilteredEvents(sortedEvents.slice(0, 16));
         } catch (error) {
           console.log("Error fetching events: ", error);
         } finally {
@@ -40,7 +40,6 @@ function PopularEvents() {
       fetchData();
     }
   }, [userLocation]);
-
 
   if (loading) {
     return (
