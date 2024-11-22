@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EventsList from "./EventsList";
-import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 function EventsBrowser() {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1); // Stored the current page number
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page number
   const pageSize = 16; // Number of events per page
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,14 +21,12 @@ function EventsBrowser() {
   }, []);
 
   useEffect(() => {
-    // console.log("User location: ", userLocation);
     if (userLocation) {
       const fetchData = async () => {
         try {
           const response = await axios.get(
             `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
           );
-          console.log("Fetched events:", response.data.length);
           const sortedEvents = response.data.sort(
             (a, b) => new Date(a.time) - new Date(b.time)
           );
@@ -43,16 +40,15 @@ function EventsBrowser() {
       };
       fetchData();
     }
-    // console.log("Events: ", events);
   }, [userLocation]);
 
   // Handle next page button click
   const handleNextPage = () => {
-    // console.log("Current page: ", currentPage);
     if (currentPage * pageSize < events.length) {
       setCurrentPage(currentPage + 1);
     }
   };
+
   // Handle previous page button click
   const handlePrevPage = () => {
     if (currentPage > 1) {
@@ -66,7 +62,9 @@ function EventsBrowser() {
 
   // Get the displayed events based on the current page and filtered events
   const displayedEvents = filteredEvents.slice(startIndex, endIndex);
-  // console.log("Displayed events: ", displayedEvents);
+
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredEvents.length / pageSize);
 
   if (loading) {
     return (
@@ -78,11 +76,11 @@ function EventsBrowser() {
 
   return (
     <>
-      {/* <Navbar /> */}
       <div className="container mx-auto min-h-screen mt-4">
-        <div className="events-list mt-24">
+        <div className="events-list mt-40">
           <EventsList events={displayedEvents} />
-          <div className="pagination flex justify-between mt-2">
+          <div className="pagination flex justify-between mt-8 items-center">
+            {/* Previous Button */}
             <button
               disabled={currentPage === 1}
               onClick={handlePrevPage}
@@ -92,10 +90,14 @@ function EventsBrowser() {
               <span>Prev</span>
             </button>
 
-            <div className="flex justify-center">
-              {/* Your events list content here */}
+            {/* Page Number Display (always centered) */}
+            <div className="flex-1 text-center">
+              <span>
+                {currentPage} / {totalPages} pages
+              </span>
             </div>
 
+            {/* Next Button */}
             <button
               disabled={currentPage * pageSize >= events.length}
               onClick={handleNextPage}

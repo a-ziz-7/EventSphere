@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EventsList from "./EventsList";
@@ -6,6 +5,9 @@ import EventsList from "./EventsList";
 function Buttons({ setIsCategorySelected }) {
   const [events, setEvents] = useState([]);
   const [category, setCategory] = useState("");
+  const [currentPage, setCurrentPage] = useState(1); // Track the current page
+  const [totalPages, setTotalPages] = useState(1); // Track total number of pages
+  const pageSize = 16; // Number of events per page
 
   useEffect(() => {
     if (category) {
@@ -13,6 +15,7 @@ function Buttons({ setIsCategorySelected }) {
         .get(`http://localhost:5000/api/events/category/${category}`)
         .then((response) => {
           setEvents(response.data);
+          setTotalPages(Math.ceil(response.data.length / pageSize)); // Calculate total pages
           setIsCategorySelected(true); // Notify Home component that a category is selected
         })
         .catch((error) => {
@@ -23,6 +26,21 @@ function Buttons({ setIsCategorySelected }) {
 
   const handleCategoryClick = (categoryName) => {
     setCategory(categoryName.toLowerCase().replace(" & ", "-"));
+    setCurrentPage(1); // Reset to page 1 when a new category is selected
+  };
+
+  // Handle next page button click
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Handle previous page button click
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
@@ -64,7 +82,36 @@ function Buttons({ setIsCategorySelected }) {
           Art/Performances
         </button>
       </div>
-      <EventsList events={events} />
+
+      {category && (
+        <div>
+          <EventsList
+            events={events.slice(
+              (currentPage - 1) * pageSize,
+              currentPage * pageSize
+            )}
+          />
+          <div className="pagination flex justify-between mt-2">
+            <button
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+            >
+              Prev
+            </button>
+            <div className="text-center">
+              {currentPage} / {totalPages} pages
+            </div>
+            <button
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
