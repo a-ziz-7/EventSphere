@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -58,9 +59,9 @@ function EventDetails() {
   });
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="container mx-auto px-4 mt-24">
+      <div className="container mx-auto px-4 mt-44 flex-grow">
         <div className="event-details flex flex-wrap items-center">
           {/* Event Image */}
           <div className="event-image w-full md:w-1/2">
@@ -105,6 +106,7 @@ function EventDetails() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
