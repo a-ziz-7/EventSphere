@@ -106,7 +106,7 @@ const CreateEvent = () => {
       const response = await fetch("http://localhost:5000/api/events", {
         method: "POST",
         body: eventData,
-        credentials: "include", // Ensure cookies are sent with the request
+        credentials: "include"
       });
 
       if (response.ok) {
@@ -124,12 +124,23 @@ const CreateEvent = () => {
     }
   };
 
-  const handleCategoryToggle = (category) => {
-    setCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((cat) => cat !== category)
-        : [...prev, category]
-    );
+  const handleCategoryToggle = async (category) => {
+    const getCookie = (name) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    };
+    
+    const userUUID = getCookie('userUUID');
+    console.log("User UUID:", userUUID);
+    
+    if (categories.includes(category)) {
+      setCategories(categories.filter((c) => c !== category));
+      console.log("Categories:", categories.filter((c) => c !== category));
+    } else {
+      setCategories([...categories, category]);
+      console.log("Categories:", [...categories, category]);
+    }
   };
 
   const handleThumbnailChange = (e) => {
@@ -245,8 +256,6 @@ const CreateEvent = () => {
                     />
                   </div>
                 </div>
-
-                {/* Left-Side Fields */}
                 <div className="space-y-4">
                   <div>
                     <label className="block text-gray-700 font-medium mb-2">

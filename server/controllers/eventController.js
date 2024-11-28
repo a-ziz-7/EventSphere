@@ -39,7 +39,7 @@ export const createEvent = async (req, res) => {
     try {
         console.log(req.cookies.ajs_anonymous_id);
         const user = req.cookies.ajs_anonymous_id;
-
+        console.log(req);
         if (!user) {
             return res.status(401).send('Unauthorized');
         }
@@ -71,7 +71,7 @@ export const createEvent = async (req, res) => {
                 address, // 6
                 capacity, // 7
                 user, // 8 Set the user_id from the session data
-                categories.join(','), // 9 Convert categories array to comma-separated string
+                categories,
                 duration, // 10
                 state, // 11
                 location, // 12
