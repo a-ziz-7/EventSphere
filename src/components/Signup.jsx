@@ -3,9 +3,11 @@ import { useUser } from "./UserContext"; // Import the custom hook
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const { login } = useUser(); // Get the login function from UserContext
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -61,8 +63,10 @@ function Signup() {
       // alert(response.data); // Assuming the server returns a success message
 
       // Log in the user after successful registration
-      login(response.data.user); // Assuming the server returns user data in response
+      login(response.data); // Assuming the server returns user data in response
       alert("Signup successful!");
+      console.log(response.data);
+      navigate("/home");
     } catch (err) {
       console.error("Signup failed:", err);
       setError(err.response?.data || "Failed to register. Please try again");

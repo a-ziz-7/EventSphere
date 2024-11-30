@@ -1,13 +1,13 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { useUser } from "./UserContext";
 
 const Login = () => {
   const { login } = useUser();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,12 +20,15 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
-        user_name: username, // use "username" instead of "user_name"
-        password: password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          user_name: username, // use "username" instead of "user_name"
+          password: password,
+        }
+      );
 
-      login(response.data.user);
+      login(response.data);
       navigate("/home");
     } catch (err) {
       console.error("Login failed:", err);
@@ -64,7 +67,10 @@ const Login = () => {
               </div>
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1">
@@ -87,7 +93,9 @@ const Login = () => {
                 type="submit"
                 disabled={loading}
                 className={`w-full py-3 text-white text-lg font-bold rounded-md transition duration-300 ${
-                  loading ? "bg-indigo-300" : "bg-indigo-500 hover:bg-indigo-600"
+                  loading
+                    ? "bg-indigo-300"
+                    : "bg-indigo-500 hover:bg-indigo-600"
                 }`}
               >
                 {loading ? "Logging in..." : "Login"}
@@ -99,6 +107,6 @@ const Login = () => {
       <Footer />
     </>
   );
-}
+};
 
 export default Login;

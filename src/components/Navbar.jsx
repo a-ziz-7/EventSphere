@@ -1,7 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useUser } from "./UserContext";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, logout, isLoggedIn } = useUser();
+
+  // useEffect(() => {
+  //   const storedUser = localStorage.getItem("user");
+  //   console.log(user);
+  //   if (storedUser) {
+  //     console.log(isLoggedIn);
+  //     setIsLoggedIn(true);
+  //   }
+  // }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -55,24 +66,28 @@ function Navbar() {
           >
             Browse Events
           </a>
-          <a
-            href="/rsvp"
-            className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
-          >
-            RSVP
-          </a>
+          {isLoggedIn && (
+            <a
+              href="/rsvp"
+              className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              RSVP
+            </a>
+          )}
           <a
             href="/team"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Our Team
           </a>
-          <a
-            href="/create"
-            className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
-          >
-            Create Event
-          </a>
+          {isLoggedIn && (
+            <a
+              href="/create"
+              className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Create Event
+            </a>
+          )}
           <a
             href="/terms"
             className="text-base font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out transform hover:scale-105"
@@ -81,18 +96,35 @@ function Navbar() {
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center space-x-4">
-          <a
-            href="/login"
-            className="text-lg font-semibold leading-6 text-gray-900 hover:text-indigo-600 transition duration-300 ease-in-out"
-          >
-            Log in
-          </a>
-          <a
-            href="/signup"
-            className="text-lg font-semibold rounded-md bg-indigo-600 px-3 py-2 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 transition duration-300 ease-in-out"
-          >
-            Sign up
-          </a>
+          {isLoggedIn ? (
+            <>
+              <div className="text-base font-semibold leading-6 text-gray-900 mb-2">
+                Welcome, {user.first_name}!
+              </div>
+
+              <button
+                className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <a
+                className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+                href="/login"
+              >
+                Login
+              </a>
+              <a
+                className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
+                href="/signup"
+              >
+                Sign Up
+              </a>
+            </>
+          )}
         </div>
       </nav>
 
@@ -100,6 +132,11 @@ function Navbar() {
       {isMobileMenuOpen && (
         <div className="lg:hidden navbar-footer-gradient">
           <div className="space-y-2 px-2 pb-3 pt-2">
+            {isLoggedIn && (
+              <div className="text-base font-semibold leading-6 text-gray-900 mb-2">
+                Welcome, {user.first_name}!
+              </div>
+            )}
             <a
               href="/home"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
@@ -112,36 +149,59 @@ function Navbar() {
             >
               Browse Events
             </a>
-            <a
-              href="/rsvp"
-              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
-            >
-              RSVP
-            </a>
+            {isLoggedIn && (
+              <a
+                href="/rsvp"
+                className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+              >
+                RSVP
+              </a>
+            )}
             <a
               href="/team"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Our Team
             </a>
+            {isLoggedIn && (
+              <a
+                href="/create"
+                className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+              >
+                Create Event
+              </a>
+            )}
             <a
               href="/terms"
               className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
             >
               Terms
             </a>
-            <a
-              href="/login"
-              className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
-            >
-              Log in
-            </a>
-            <a
-              href="/signup"
-              className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
-            >
-              Sign up
-            </a>
+            {isLoggedIn ? (
+              <>
+                <button
+                  className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
+                  onClick={logout}
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <a
+                  className="block rounded-md px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-200"
+                  href="/login"
+                >
+                  Login
+                </a>
+                <a
+                  className="block rounded-md bg-indigo-600 px-3 py-2 text-base font-semibold text-white shadow-sm hover:bg-indigo-500"
+                  href="/signup"
+                >
+                  Sign Up
+                </a>
+              </>
+            )}
           </div>
         </div>
       )}

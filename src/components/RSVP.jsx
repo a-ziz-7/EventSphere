@@ -1,10 +1,21 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { useUser } from "./UserContext";
 
 const RSVP = () => {
   const navigate = useNavigate();
+  const { user, isLoggedIn } = useUser();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    console.log(storedUser);
+    if (!storedUser) {
+      alert("Please Log In to RSVP");
+      navigate("/login");
+    }
+  });
 
   const handleBrowse = () => {
     navigate("/browse"); // Navigate to the browse route
