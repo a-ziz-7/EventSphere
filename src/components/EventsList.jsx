@@ -1,8 +1,13 @@
 import React from "react";
 
-const EventsList = ({ events }) => {
+const EventsList = ({ events, category }) => {
   return (
     <div className="container mx-auto px-4 mt-7">
+      {category && (
+        <h1 className="text-2xl font-bold text-gray-800 text-center mb-5">
+          {category.charAt(0).toUpperCase() + category.slice(1)} Events
+        </h1>
+      )}
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {events.map((event) => (
           <a
@@ -13,7 +18,6 @@ const EventsList = ({ events }) => {
             key={event.id} // Ensure unique key here
           >
             <li className="event-card w-full p-4 rounded-lg shadow-md transition-transform duration-300 ease-in-out bg-white border border-gray-300 hover:bg-blue-200 hover:shadow-xl hover:border-blue-400 transform hover:-translate-y-1 cursor-pointer">
-              {/* Display Image if Available */}
               {event.image && (
                 <img
                   src={event.image}
@@ -29,15 +33,6 @@ const EventsList = ({ events }) => {
                 <span className="font-semibold">
                   {new Date(event.time).toLocaleString()}
                 </span>
-              </p>
-              <p className="mb-1 text-sm text-gray-700">
-                Attendees:{" "}
-                <span className="font-semibold">
-                  {event.attendies && event.attendies.length === 0
-                    ? 0
-                    : event.attendies}
-                </span>{" "}
-                / {event.capacity}
               </p>
               <p className="mb-1 text-sm text-gray-700">
                 Address: <span className="font-semibold">{event.address}</span>
