@@ -305,10 +305,10 @@ export const getEventsCategory = async (req, res) => {
     const { category } = req.params;
 
     try {
-        // Query to fetch events where categories contain the specified category
         const query = `
             SELECT * FROM event 
             WHERE categories LIKE $1
+            ORDER BY time ASC
         `;
         const result = await db.query(query, [`%${category}%`]);
         if (result.rows.length > 0) {
@@ -321,6 +321,7 @@ export const getEventsCategory = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
 
 async function fututeEvents(events) {
     const currentDate = new Date();

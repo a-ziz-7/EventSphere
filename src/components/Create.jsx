@@ -109,6 +109,8 @@ const CreateEvent = () => {
         userId = parsedUser.id;
     }
 
+    setCategories(categories.map(category => category.toLowerCase()));
+
     const eventData = {
       title,
       description,
