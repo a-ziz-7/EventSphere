@@ -19,7 +19,6 @@ export const UserProvider = ({ children }) => {
         console.error("Error parsing stored user data:", error);
       }
     }
-    console.log(isLoggedIn);
   }, []);
 
   const login = async (userData) => {

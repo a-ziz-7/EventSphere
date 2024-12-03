@@ -66,7 +66,11 @@ function EventDetails() {
           {/* Event Image */}
           <div className="event-image w-full md:w-1/2">
             <img
-              src={"/E.png"} // Correct file path
+              src={
+                event.thumbnail && event.thumbnail.data
+                  ? `data:image/png;base64,${event.thumbnail.data}`
+                  : "/E.png" // Default image path
+              }
               alt={event.title}
               className="w-full h-auto rounded-lg shadow-md"
             />

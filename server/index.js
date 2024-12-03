@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import session from "express-session";
+import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import db from "./db/db.js";
 
@@ -29,16 +30,17 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000; // Default to port 5000 if not set in env
 
-app.use(cors());
+// app.use(cors());
+app.use(bodyParser.json({ limit: "20mb" }));
+app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
+
+
 app.use(
   cors({
-    origin: 'http://localhost:5173',
-    credentials: true, // Allow credentials (cookies, etc.)
+    origin: "http://localhost:5173", // Allow requests from your frontend
+    credentials: true, // Allow cookies and credentials
   })
 );
-
-app.use(express.json());
-app.use(cookieParser());
 
 app.use(
   session({

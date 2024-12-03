@@ -16,7 +16,8 @@ const getLocationFromAddress = async (address) => {
     const response = await axios.get(endpoint);
 
     const location = response.data.results[0].geometry.location;
-    return [location.lat, location.lng]; // Return the location object
+    // return [location.lat, location.lng]; // Return the location object
+    return [location.lng, location.lat]; // Return the location object
 };
 
 export const eventInfo = async (req, res) => {
@@ -37,25 +38,15 @@ export const eventInfo = async (req, res) => {
 
 export const createEvent = async (req, res) => {
     try {
-        console.log(req.cookies.ajs_anonymous_id);
-        const user = req.cookies.ajs_anonymous_id;
-        console.log(req);
-        if (!user) {
-            return res.status(401).send('Unauthorized');
-        }
-
-        console.log(req.body);
-
-        // Extract event details from the request body
-        const { title, description, time, address, capacity, categories, duration, state, thumbnail = null } = req.body;
+        const { title, description, time, address, capacity, categories, duration, state, thumbnail, userId } = req.body;
 
         // Generate a new UUID for the event
         const eventId = uuidv4();
 
-        // Fetch location coordinates from the addresss
-        // const location = await getLocationFromAddress(address);
-        const location = [0, 0];
+        // Fetch location coordinates from the address
+        const location = await getLocationFromAddress(address);
 
+        // Save the event in the database
         await db.query(
             `INSERT INTO event (
                 id, title, description, created_at, time, address, capacity, user_id, categories, duration, state, location, thumbnail
@@ -63,30 +54,28 @@ export const createEvent = async (req, res) => {
                 $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13
             )`,
             [
-                eventId, // 1
-                title, // 2
-                description, // 3
-                new Date(), // 4
-                time, // 5
-                address, // 6
-                capacity, // 7
-                user, // 8 Set the user_id from the session data
+                eventId,
+                title,
+                description,
+                new Date(),
+                time,
+                address,
+                capacity,
+                userId,
                 categories,
-                duration, // 10
-                state, // 11
-                location, // 12
-                thumbnail // 13
+                duration,
+                state,
+                location,
+                thumbnail,
             ]
         );
 
-        console.log(`Event "${title}" created successfully by user ID: ${user.id}`);
-        res.status(201).send(`Event "${title}" created successfully.`);
+        res.status(201).json({ id: `${eventId}`, message: `Event "${title}" created successfully.` });
     } catch (error) {
-        console.error('Error creating event:', error);
-        res.status(500).send('Error creating event.');
+        console.error("Error creating event:", error);
+        res.status(500).send("Error creating event.");
     }
 };
-
 
 // gets allllll events, not useful
 export const getEvents = async (req, res) => {

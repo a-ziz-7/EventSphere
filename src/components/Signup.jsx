@@ -78,7 +78,7 @@ function Signup() {
       <Navbar />
       <div className="flex min-h-screen flex-col justify-center items-center py-8">
         <h1 className="text-4xl font-bold pt-20 mb-8 text-center">
-          Registration Form
+          Sign Up to EventSphere
         </h1>
         <form
           className="w-full max-w-2xl mx-auto bg-white p-12 rounded-md shadow-md"

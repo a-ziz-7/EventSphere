@@ -13,7 +13,7 @@ const CreateEvent = () => {
   const [state, setState] = useState("");
   const [capacity, setCapacity] = useState("");
   const [categories, setCategories] = useState([]);
-  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState({});
   const navigate = useNavigate();
   const { user, isLoggedIn } = useUser();
 
@@ -93,7 +93,6 @@ const CreateEvent = () => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    console.log(storedUser);
     if (!storedUser) {
       alert("You must log in to create an event");
       navigate("/login");
@@ -103,6 +102,13 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const storedUser = localStorage.getItem("user");
+    let userId = null;
+    if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        userId = parsedUser.id;
+    }
+
     const eventData = {
       title,
       description,
@@ -111,31 +117,37 @@ const CreateEvent = () => {
       address,
       state,
       capacity,
-      categories: categories.join(","), // Convert categories array to a comma-separated string
-      thumbnail,
+      categories: categories.join(","),
+      thumbnail: {'data': thumbnail},
+      userId,
     };
-    console.log("Event Data:", eventData);
-    try {
-      const response = await fetch("http://localhost:5000/api/events", {
-        method: "POST",
-        body: eventData,
-        credentials: "include", // Ensure cookies are sent with the request
-      });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Event created successfully:", result);
-        alert("Event created successfully!");
-      } else {
-        const error = await response.text();
-        console.error("Error creating event:", error);
-        alert(`Failed to create event: ${error}`);
-      }
+    try {
+        const response = await fetch("http://localhost:5000/api/events", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json", // Ensure JSON format
+            },
+            body: JSON.stringify(eventData), // Send JSON data
+            credentials: "include", // Include cookies
+        });
+
+        if (response.status === 201) {
+            const result = await response.json();
+            console.log("Event created successfully:", result);
+            // alert("Event created successfully!");
+            navigate(`/event/${result.id}`);
+        } else {
+            const error = await response.text();
+            console.error("Error creating event:", error);
+            alert(`Failed to create event: ${error}`);
+        }
     } catch (error) {
-      console.error("Error:", error);
-      alert("An unexpected error occurred.");
+        console.error("Error:", error);
+        alert("An unexpected error occurred.");
     }
-  };
+};
+
 
   const handleCategoryToggle = (category) => {
     setCategories((prev) =>
@@ -146,8 +158,27 @@ const CreateEvent = () => {
   };
 
   const handleThumbnailChange = (e) => {
-    setThumbnail(e.target.files[0]);
+    const file = e.target.files[0]; // Get the selected file
+    if (file) {
+      const reader = new FileReader();
+      
+      reader.onload = () => {
+        // Convert the file content to Base64
+        const base64String = reader.result.split(",")[1]; // Strip metadata
+        setThumbnail(base64String); // Save the Base64 string
+      };
+  
+      reader.onerror = (error) => {
+        console.error("Error reading file:", error);
+        alert("Failed to process the file. Please try again.");
+      };
+  
+      reader.readAsDataURL(file); 
+
+      console.log("File:", file);
+    }
   };
+  
 
   return (
     <>

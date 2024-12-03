@@ -14,9 +14,9 @@ const EventsList = ({ events }) => {
           >
             <li className="event-card w-full p-4 rounded-lg shadow-md transition-transform duration-300 ease-in-out bg-white border border-gray-300 hover:bg-blue-200 hover:shadow-xl hover:border-blue-400 transform hover:-translate-y-1 cursor-pointer">
               {/* Display Image if Available */}
-              {event.image && (
+              {event.thumbnail && (
                 <img
-                  src={event.image}
+                  src={`data:image/png;base64,${event.thumbnail.data}`}
                   alt={event.title}
                   className="w-full h-40 object-cover mb-4 rounded-md"
                 />
