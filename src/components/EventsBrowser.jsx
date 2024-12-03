@@ -77,7 +77,12 @@ function EventsBrowser() {
   return (
     <>
       <div className="container mx-auto min-h-screen mt-4">
-        <div className="events-list mt-40">
+        {/* Add the header */}
+        <h1 className="text-center text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl mt-36">
+          All Events <span className="badge text-bg-secondary">Browse Now</span>
+        </h1>
+
+        <div className="events-list mt-16">
           <EventsList events={displayedEvents} />
           <div className="pagination flex justify-between mt-8 items-center">
             {/* Previous Button */}

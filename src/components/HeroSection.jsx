@@ -21,7 +21,7 @@ const HeroSection = () => {
             </h1>
 
             <p
-              className="text-2xl mb-12 text-white w-full md:w-1/2 lg:w-1/3"
+              className="text-2xl mb-12 text-white w-full md:w-1/2 lg:w-1/3 mt-12"
               style={{
                 textShadow:
                   "0.5px 0.5px 0px black, -0.5px -0.5px 0px black, 0.5px -0.5px 0px black, -0.5px 0.5px 0px black",

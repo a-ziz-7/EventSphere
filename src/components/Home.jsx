@@ -16,7 +16,7 @@ function Home() {
       <Buttons setIsCategorySelected={setIsCategorySelected} />
       {!isCategorySelected && (
         <>
-          <h1 className="container text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+          <h1 className="container text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl text-center">
             Popular Events{" "}
             <span className="badge text-bg-secondary">Near You</span>
           </h1>

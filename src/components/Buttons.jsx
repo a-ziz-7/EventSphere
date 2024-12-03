@@ -29,14 +29,12 @@ function Buttons({ setIsCategorySelected }) {
     setCurrentPage(1); // Reset to page 1 when a new category is selected
   };
 
-  // Handle next page button click
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
 
-  // Handle previous page button click
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -46,6 +44,13 @@ function Buttons({ setIsCategorySelected }) {
   return (
     <div className="flex flex-col items-center py-5">
       <div className="flex flex-wrap gap-4 justify-center py-3">
+        <a
+          href="/home"
+          className="bg-purple-500 text-white rounded-lg px-5 py-3 hover:bg-purple-600 transition duration-300 transform hover:scale-105 inline-block text-center no-underline"
+        >
+          Popular Events Near You
+        </a>
+
         <button
           className="bg-indigo-500 text-white rounded-lg px-5 py-3 hover:bg-indigo-600 transition duration-300 transform hover:scale-105"
           type="button"
@@ -82,6 +87,16 @@ function Buttons({ setIsCategorySelected }) {
           Art/Performances
         </button>
       </div>
+
+      {/* Display the H1 only if a category is selected */}
+      {category && (
+        <h1 className="text-center text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl mt-10">
+          {category
+            .replace("-", " & ")
+            .replace(/\b\w/g, (char) => char.toUpperCase())}{" "}
+          <span className="badge text-bg-secondary">Events</span>
+        </h1>
+      )}
 
       {category && (
         <div>

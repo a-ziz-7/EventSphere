@@ -6,7 +6,7 @@ function Terms() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto px-6 py-8 mt-4">
+      <div className="container mx-auto px-6 py-8 mt-24">
         {/* Title Section */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-extrabold text-indigo-600 mb-4">
