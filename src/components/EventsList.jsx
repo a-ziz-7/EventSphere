@@ -37,12 +37,12 @@ const EventsList = ({ events, category }) => {
               <p className="mb-1 text-sm text-gray-700">
                 Address: <span className="font-semibold">{event.address}</span>
               </p>
-              <p className="mb-1 text-sm text-gray-700 overflow-hidden truncate hover:truncate-none">
+              {/* <p className="mb-1 text-sm text-gray-700 overflow-hidden truncate hover:truncate-none">
                 Description:{" "}
                 <span className="font-semibold">
                   {event.description ? event.description : "No description"}
                 </span>
-              </p>
+              </p> */}
               <p className="mb-1 text-sm text-gray-700">
                 Categories:{" "}
                 <span className="font-semibold">

@@ -77,7 +77,7 @@ function EventDetails() {
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="container mx-auto px-4 mt-44 flex-grow">
+      <div className="container mx-auto px-4 mt-32 flex-grow">
         <div className="event-details flex flex-wrap items-center">
           {/* Event Media (Image or Map) */}
           <div className="event-media w-full md:w-1/2">
@@ -85,8 +85,9 @@ function EventDetails() {
               <img
                 src={`data:image/png;base64,${event.thumbnail.data}`}
                 alt={event.title}
-                className="w-full h-auto rounded-lg shadow-md"
+                className="w-full h-[510px] object-cover rounded-lg shadow-md"
               />
+            
             ) : (
               <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                 <GoogleMap
