@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { GoogleMap, LoadScript, MarkerF, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, InfoWindow } from "@react-google-maps/api";
 import { use } from "react";
 
 function EventDetails() {
@@ -50,6 +50,26 @@ function EventDetails() {
     };
     fetchEvent();
   }, [eventId]);
+
+  useEffect(() => {
+    if (event && mapRef.current) {
+      const { location } = event;
+      const position = { lat: location[1], lng: location[0] };
+
+      // Create the marker with the Google Maps API
+      markerRef.current = new google.maps.Marker({
+        position,
+        map: mapRef.current,
+        title: event.title || "",
+      });
+
+      // Handle marker click event
+      markerRef.current.addListener("click", () => {
+        setInfoWindowPosition(position);
+        setInfoWindowOpen(true);
+      });
+    }
+  }, [event]);
 
   if (error) {
     return (
@@ -132,24 +152,14 @@ function EventDetails() {
                 alt={event.title}
                 className="w-full h-[510px] object-cover rounded-lg shadow-md"
               />
-            
             ) : (
               <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                 <GoogleMap
                   mapContainerStyle={containerStyle}
                   center={{ lat: eventLocation[1], lng: eventLocation[0] }}
                   zoom={15}
+                  onLoad={(map) => (mapRef.current = map)} // Save map reference
                 >
-                  <MarkerF
-                    position={{ lat: eventLocation[1], lng: eventLocation[0] }}
-                    title={eventTitle || ""}
-                    onClick={handleMarkerClick}
-                    options={{
-                      clickable: true,
-                      optimized: true,
-                      title: null,
-                    }}
-                  />
                   {infoWindowOpen && infoWindowPosition && (
                     <InfoWindow
                       position={infoWindowPosition}
