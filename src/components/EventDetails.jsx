@@ -257,25 +257,18 @@ function EventDetails() {
               </div>
             )}
 
-            
             <div className="actions mt-6 flex flex-wrap gap-4">
-              {!attendStatus && (
-                <button 
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md"
-                  onClick={sendAttend}
-                >
-                  Attend Event
-                </button>
-              )}
-              {attendStatus && (
-                <button
-                  className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md"
-                  onClick={cancelRSVP}
-                >
-                  Cancel RSVP
-                </button>
-              )}
+              <button
+                className={`text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md ${
+                  attendStatus ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"
+                }`}
+                onClick={attendStatus ? cancelRSVP : sendAttend}
+              >
+                {attendStatus ? "Cancel RSVP" : "Attend Event"}
+              </button>
             </div>
+   
+            
           </div>
         </div>
       </div>
