@@ -41,7 +41,9 @@ function EventDetails() {
           return;
         }
         if (response.data.attendies.includes(parsedUser.id)) {
-          setAttendStatus("You are attending this event" + (response.data.attendies.length==1?"!":" and " + (response.data.attendies.length-1) + " other(s)!"));
+          setAttendStatus("You are attending this event" + 
+            (response.data.attendies.length==1? "!":
+                                                " and " + (response.data.attendies.length-1) + " other(s)!"));
           return;
         }
       } catch (error) {
@@ -247,12 +249,6 @@ function EventDetails() {
                 </p>
               </div>
             )}
-            {/* <div className="event-description mt-6">
-              <h2 className="text-2xl font-bold mb-3">About the Event</h2>
-              <p className="text-gray-700 text-base leading-relaxed">
-                {event.description}
-              </p>
-            </div> */}
 
             {/* Attendee List */}
             {attendStatus && (
