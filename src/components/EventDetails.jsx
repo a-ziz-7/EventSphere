@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { GoogleMap, LoadScript, MarkerF, InfoWindow } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, InfoWindow } from "@react-google-maps/api";
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -12,6 +12,8 @@ function EventDetails() {
   const [isLoading, setIsLoading] = useState(true);
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
 
   const containerStyle = {
     width: "100%",
@@ -34,6 +36,26 @@ function EventDetails() {
     };
     fetchEvent();
   }, [eventId]);
+
+  useEffect(() => {
+    if (event && mapRef.current) {
+      const { location } = event;
+      const position = { lat: location[1], lng: location[0] };
+
+      // Create the marker with the Google Maps API
+      markerRef.current = new google.maps.Marker({
+        position,
+        map: mapRef.current,
+        title: event.title || "",
+      });
+
+      // Handle marker click event
+      markerRef.current.addListener("click", () => {
+        setInfoWindowPosition(position);
+        setInfoWindowOpen(true);
+      });
+    }
+  }, [event]);
 
   if (error) {
     return (
@@ -69,11 +91,6 @@ function EventDetails() {
   const eventLocation = event.location ? event.location : [40.7128, -74.0060]; // Default to New York City
   const eventTitle = event.title ? event.title : "Unnamed Event";
 
-  const handleMarkerClick = () => {
-    setInfoWindowOpen(true);
-    setInfoWindowPosition({ lat: eventLocation[1], lng: eventLocation[0] });
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar />
@@ -87,24 +104,14 @@ function EventDetails() {
                 alt={event.title}
                 className="w-full h-[510px] object-cover rounded-lg shadow-md"
               />
-            
             ) : (
               <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
                 <GoogleMap
                   mapContainerStyle={containerStyle}
                   center={{ lat: eventLocation[1], lng: eventLocation[0] }}
                   zoom={15}
+                  onLoad={(map) => (mapRef.current = map)} // Save map reference
                 >
-                  <MarkerF
-                    position={{ lat: eventLocation[1], lng: eventLocation[0] }}
-                    title={eventTitle || ""}
-                    onClick={handleMarkerClick}
-                    options={{
-                      clickable: true,
-                      optimized: true,
-                      title: null,
-                    }}
-                  />
                   {infoWindowOpen && infoWindowPosition && (
                     <InfoWindow
                       position={infoWindowPosition}
@@ -144,9 +151,7 @@ function EventDetails() {
             </div>
             <div className="event-description mt-6">
               <h2 className="text-2xl font-bold mb-3">About the Event</h2>
-              <p className="text-gray-700 text-base leading-relaxed">
-                {event.description}
-              </p>
+              <p className="text-gray-700 text-base leading-relaxed">{event.description}</p>
             </div>
 
             {/* Action Buttons */}
