@@ -362,6 +362,37 @@ export const attendEvent = async (req, res) => {
     }
 }
 
+export const cancelAttendEvent = async (req, res) => {
+    const { userId, eventId } = req.body;
+    try {
+        const eventResult = await db.query('SELECT * FROM event WHERE id = $1', [eventId]);
+        if (eventResult.rows.length === 0) {
+            return res.status(404).send('Event not found.');
+        }
+        const event = eventResult.rows[0];
+        var attendies = event.attendies;
+
+        if (!attendies || !attendies.includes(userId)) {
+            return res.status(400).send('User not attending this event.');
+        }
+
+        attendies = attendies.filter(id => id !== userId);
+
+        const updateQuery = `
+            UPDATE event
+            SET attendies = $1
+            WHERE id = $2
+            RETURNING *;
+        `;
+
+        const result = await db.query(updateQuery, [attendies, eventId]);
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error('Error canceling attendance:', err.stack);
+        res.status(500).send('Server error');
+    }
+}
+
 async function getEventsPredictHQ(start = 0, stop = 2500) {
     const url = 'https://api.predicthq.com/v1/events/';
     const limit = 50; // number of events you want to fetch per request

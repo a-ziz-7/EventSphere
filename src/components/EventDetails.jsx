@@ -127,11 +127,6 @@ function EventDetails() {
   const eventLocation = event.location ? event.location : [40.7128, -74.0060]; // Default to New York City
   const eventTitle = event.title ? event.title : "Unnamed Event";
 
-  const handleMarkerClick = () => {
-    setInfoWindowOpen(true);
-    setInfoWindowPosition({ lat: eventLocation[1], lng: eventLocation[0] });
-  };
-
   const sendAttend = async () => {
     try {
       const storedUser = localStorage.getItem("user");
@@ -159,6 +154,32 @@ function EventDetails() {
       console.error('Error sending request:', error);
     }
   };
+
+  const cancelRSVP = async () => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (!storedUser) {
+          alert('Please login to cancel the event');
+          return;
+      }
+      const parsedUser = JSON.parse(storedUser);
+      const response = await fetch('http://localhost:5000/api/events/cancel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userId: parsedUser.id, eventId: eventId }), 
+      });
+      if (response.ok) {
+        // alert('You have successfully cancelled your RSVP');
+        window.location.reload();
+      } else {
+        alert('An error occurred while trying to cancel your RSVP');
+      }
+    } catch (error) {
+      console.error('Error sending request:', error);
+    }
+  }  
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -240,17 +261,24 @@ function EventDetails() {
               </div>
             )}
 
-            {/* Action Buttons */}
+            
             <div className="actions mt-6 flex flex-wrap gap-4">
-              <button 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md"
-                onClick={sendAttend}
-              >
-                Attend Event
-              </button>
-              {/* <button className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md">
-                Buy Tickets
-              </button> */}
+              {!attendStatus && (
+                <button 
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md"
+                  onClick={sendAttend}
+                >
+                  Attend Event
+                </button>
+              )}
+              {attendStatus && (
+                <button
+                  className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition duration-300 shadow-md"
+                  onClick={cancelRSVP}
+                >
+                  Cancel RSVP
+                </button>
+              )}
             </div>
           </div>
         </div>
