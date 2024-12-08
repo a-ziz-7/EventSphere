@@ -14,6 +14,8 @@ function EventDetails() {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [infoWindowPosition, setInfoWindowPosition] = useState(null);
   const [attendStatus, setAttendStatus] = useState("");
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
 
   const containerStyle = {
     width: "100%",
@@ -50,6 +52,26 @@ function EventDetails() {
     };
     fetchEvent();
   }, [eventId]);
+
+  useEffect(() => {
+    if (event && mapRef.current) {
+      const { location } = event;
+      const position = { lat: location[1], lng: location[0] };
+
+      // Create the marker with the Google Maps API
+      markerRef.current = new google.maps.Marker({
+        position,
+        map: mapRef.current,
+        title: event.title || "",
+      });
+
+      // Handle marker click event
+      markerRef.current.addListener("click", () => {
+        setInfoWindowPosition(position);
+        setInfoWindowOpen(true);
+      });
+    }
+  }, [event]);
 
   useEffect(() => {
     if (event && mapRef.current) {
@@ -118,7 +140,6 @@ function EventDetails() {
           return;
       }
       const parsedUser = JSON.parse(storedUser);
-      // console.log(parsedUser.id, eventId);
       const response = await fetch('http://localhost:5000/api/events/attend', {
         method: 'POST',
         headers: {
@@ -158,7 +179,7 @@ function EventDetails() {
                   mapContainerStyle={containerStyle}
                   center={{ lat: eventLocation[1], lng: eventLocation[0] }}
                   zoom={15}
-                  onLoad={(map) => (mapRef.current = map)} // Save map reference
+                  onLoad={(map) => (mapRef.current = map)}
                 >
                   {infoWindowOpen && infoWindowPosition && (
                     <InfoWindow
