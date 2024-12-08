@@ -21,6 +21,7 @@ import {
   getEventsCategory,
   searchEvents,
   getEventsRadius,
+  attendEvent
 } from "./controllers/eventController.js";
 
 import { getDevelopers } from "./controllers/developerController.js";
@@ -64,6 +65,7 @@ app.post('/api/events', createEvent);
 app.patch('/api/events/id/:eventId', isAuthenticated, editEvent);
 app.get('/api/events/search', searchEvents);
 app.get('/api/events/category/:category', getEventsCategory);
+app.post('/api/events/attend', attendEvent);
 // Test route
 app.get("/api/developers", getDevelopers);
 
