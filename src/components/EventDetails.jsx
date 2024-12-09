@@ -272,6 +272,36 @@ function EventDetails() {
           </div>
         </div>
       </div>
+      {(event.thumbnail && event.thumbnail.data) && (
+        <div className="container mx-auto px-4 mt-10 flex-grow">
+          <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
+            <GoogleMap
+              mapContainerStyle={containerStyle}
+              center={{ lat: eventLocation[1], lng: eventLocation[0] }}
+              zoom={15}
+              onLoad={(map) => (mapRef.current = map)}
+            >
+              {infoWindowOpen && infoWindowPosition && (
+                <InfoWindow
+                  position={infoWindowPosition}
+                  onCloseClick={() => setInfoWindowOpen(false)} // Close InfoWindow
+                >
+                  <div>
+                    <h3>{eventTitle}</h3>
+                    <p>{event.address}</p>
+                    <a
+                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Open in Google Maps
+                    </a>
+                  </div>
+                </InfoWindow>
+              )}
+            </GoogleMap>
+          </LoadScript>
+        </div>)}
       <Footer />
     </div>
   );
