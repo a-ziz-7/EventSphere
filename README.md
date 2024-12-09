@@ -23,7 +23,7 @@ EventSphere is an innovative online platform designed to simplify the process of
 ### Front-End
 
 -   React
--   HTML5, CSS3, Bootstrap for responsive design
+-   HTML5, CSS3, Tailwind for responsive design
 
 ### Back-End
 
