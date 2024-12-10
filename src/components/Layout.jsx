@@ -1,11 +1,8 @@
-// Layout.jsx
-// eslint-disable-next-line no-unused-vars
 import React from "react";
 
 const Layout = ({ children }) => {
   return (
     <div className="bg-white min-h-screen flex flex-col relative overflow-hidden">
-      {/* Background Design */}
       <div
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -18,8 +15,6 @@ const Layout = ({ children }) => {
           }}
         />
       </div>
-
-      {/* Main Content */}
       <main className="flex-grow">{children}</main>
     </div>
   );

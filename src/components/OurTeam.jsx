@@ -25,7 +25,7 @@ function OurTeam() {
       role: "Back-End Developer",
       imgSrc: "E.png",
       github: "https://github.com/steven-henry",
-      linkedin: "https://linkedin.com/in/steven-henry",
+      linkedin: "https://www.linkedin.com/in/stevenhenry012/",
     },
     {
       name: "Joel Diaz",

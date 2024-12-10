@@ -5,15 +5,6 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, logout, isLoggedIn } = useUser();
 
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("user");
-  //   console.log(user);
-  //   if (storedUser) {
-  //     console.log(isLoggedIn);
-  //     setIsLoggedIn(true);
-  //   }
-  // }, []);
-
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <nav

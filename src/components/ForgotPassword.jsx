@@ -13,16 +13,13 @@ function ForgotPassword() {
         <div className="mt-7 bg-white rounded-xl shadow-lg dark:bg-gray-800 dark:border-gray-700">
           <div className="p-10">
             {" "}
-            {/* Increased padding further */}
             <div className="text-center">
               <h1 className="text-5xl font-bold mb-8 text-gray-800">
                 {" "}
-                {/* Increased heading size */}
                 Forgot password?
               </h1>
               <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
                 {" "}
-                {/* Kept text size larger */}
                 Remember your password?{" "}
                 <a
                   className="text-blue-600 decoration-2 hover:underline font-medium"
@@ -34,15 +31,13 @@ function ForgotPassword() {
             </div>
             <div className="mt-8">
               {" "}
-              {/* Increased margin for spacing */}
               <form>
                 <div className="grid gap-y-6">
                   {" "}
-                  {/* Increased gap between items */}
                   <div>
                     <label
                       htmlFor="email"
-                      className="block text-lg font-bold ml-1 mb-2 text-gray-900" // Increased label size
+                      className="block text-lg font-bold ml-1 mb-2 text-gray-900" 
                     >
                       Email address
                     </label>

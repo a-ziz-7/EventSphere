@@ -26,8 +26,6 @@ function App() {
       <Router>
         <Layout>
           <Navbar />
-          {/*This <Layout> is to have the background color wrap the whole body */}{" "}
-          {/* Wrap your routes in the Layout component */}
           <Routes>
             {/* Route for Home */}
             <Route path="/" element={<FrontPage />} />

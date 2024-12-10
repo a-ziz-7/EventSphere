@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import EventsList from "./EventsList";
 import Navbar from "./Navbar";
-import popularEventImages from "./popularEventImages";
 
 function PopularEvents() {
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -32,9 +31,8 @@ function PopularEvents() {
           // Map the 16 images to the top 16 events
           const eventsWithImages = sortedEvents
             .slice(0, 16)
-            .map((event, index) => ({
+            .map((event) => ({
               ...event,
-              image: popularEventImages[index] || null, // Assign images only if available
             }));
 
           setFilteredEvents(eventsWithImages);

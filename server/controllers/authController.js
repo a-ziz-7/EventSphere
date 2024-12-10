@@ -94,8 +94,3 @@ export const logoutUser = (req, res) => {
 };
 
 export { isAuthenticated };
-
-// {
-//     "user_name": "user",
-//     "password": "Eventspherectpteam1"
-// }

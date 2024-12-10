@@ -8,7 +8,6 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    console.log(storedUser);
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
@@ -22,14 +21,11 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const login = async (userData) => {
-    // ... login logic (e.g., API call, token handling)
     try {
-      // ... handle successful login
       setIsLoggedIn(true);
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
-      // ... handle login errors
     }
   };
 

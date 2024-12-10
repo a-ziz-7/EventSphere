@@ -36,7 +36,6 @@ function EventDetails() {
         }
         
         const parsedUser = JSON.parse(storedUser);
-        // console.log(response.data, parsedUser);
         if (response.data.attendies === null){
           return;
         }
@@ -173,7 +172,6 @@ function EventDetails() {
         body: JSON.stringify({ userId: parsedUser.id, eventId: eventId }), 
       });
       if (response.ok) {
-        // alert('You have successfully cancelled your RSVP');
         window.location.reload();
       } else {
         alert('An error occurred while trying to cancel your RSVP');

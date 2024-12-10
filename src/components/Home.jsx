@@ -6,7 +6,6 @@ import HeroSection from "./HeroSection";
 import PopularEvents from "./PopularEvents";
 
 function Home() {
-  // State to track if a category is selected
   const [isCategorySelected, setIsCategorySelected] = useState(false);
 
   return (

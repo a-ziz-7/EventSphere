@@ -3,7 +3,7 @@ import Footer from "./Footer";
 function FrontPage() {
   return (
     <div className="bg-white min-h-screen flex flex-col">
-      <Navbar /> {/* Use the Navbar component here */}
+      <Navbar /> 
       <div className="relative isolate px-6 pt-24 lg:px-8 flex-grow flex items-center">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"

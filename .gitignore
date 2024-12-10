@@ -25,3 +25,4 @@ dist-ssr
 
 # Sensetive or high risk files
 .env
+server/controllers/res.txt

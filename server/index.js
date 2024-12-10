@@ -3,7 +3,6 @@ import cors from "cors";
 import express from "express";
 import session from "express-session";
 import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
 import db from "./db/db.js";
 
 import {
@@ -30,7 +29,7 @@ import { getDevelopers } from "./controllers/developerController.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000; // Default to port 5000 if not set in env
+const port = process.env.PORT || 5000;
 
 // app.use(cors());
 app.use(bodyParser.json({ limit: "20mb" }));
@@ -72,7 +71,7 @@ app.post('/api/events/cancel', cancelAttendEvent);
 app.get("/api/developers", getDevelopers);
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  // console.log(`Server running on http://localhost:${port}`);
 });
 
 process.on("SIGINT", () => {

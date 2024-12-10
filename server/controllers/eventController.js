@@ -149,7 +149,6 @@ export const searchByRadius = async (userLocation, radius) => {
         res.status(500).send('Server error');
     }
 };
-// await searchByRadius([-73.9896173, 40.7589663]);
 
 // patch api/events/:eventId
 export const editEvent = async (req, res) => {

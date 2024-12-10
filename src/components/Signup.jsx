@@ -60,7 +60,6 @@ function Signup() {
           password: formData.password,
         }
       );
-      // alert(response.data); // Assuming the server returns a success message
 
       // Log in the user after successful registration
       login(response.data); // Assuming the server returns user data in response
