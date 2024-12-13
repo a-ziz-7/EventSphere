@@ -1,9 +1,7 @@
 import db from '../db/db.js';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
-import geoip from 'geoip-lite';
 import dotenv from 'dotenv';
-import { CgWebcam } from 'react-icons/cg';
 
 dotenv.config();
 

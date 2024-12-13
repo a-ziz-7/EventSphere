@@ -1,4 +1,5 @@
 import React from "react";
+
 const HeroSection = () => {
   return (
     <div className="bg-white flex items-center justify-center h-screen">

@@ -4,7 +4,6 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { GoogleMap, LoadScript, InfoWindow } from "@react-google-maps/api";
-import { use } from "react";
 
 function EventDetails() {
   const { eventId } = useParams();
