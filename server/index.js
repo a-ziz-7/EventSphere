@@ -31,7 +31,6 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-alert(process.env.VITE_API_BASE_URL)
 
 // app.use(cors());
 app.use(bodyParser.json({ limit: "20mb" }));
@@ -52,6 +51,10 @@ app.use(
     cookie: { secure: false },
   })
 );
+
+app.get("/test", (req, res) => {
+  res.json({ message: "API is working!" });
+});
 
 // User authentication routes
 app.post("/api/auth/register", registerUser);
