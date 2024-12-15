@@ -9,13 +9,17 @@ const validCategories = ["academic", "community", "concerts", "festivals", "perf
 
 // pass in the address and get the location when creating an event
 const getLocationFromAddress = async (address) => {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
-    const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
-    const response = await axios.get(endpoint);
+    // const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    // const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`;
+    // const response = await axios.get(endpoint);
 
-    const location = response.data.results[0].geometry.location;
-    // return [location.lat, location.lng]; // Return the location object
-    return [location.lng, location.lat]; // Return the location object
+    // const location = response.data.results[0].geometry.location;
+    // // return [location.lat, location.lng]; // Return the location object
+    // return [location.lng, location.lat]; // Return the location object
+    return [
+        -73.9752846,
+        40.682658
+    ];
 };
 
 export const eventInfo = async (req, res) => {
