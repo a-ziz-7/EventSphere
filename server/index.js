@@ -12,6 +12,7 @@ import {
   isAuthenticated,
 } from "./controllers/authController.js";
 
+
 import {
   eventInfo,
   getEvents,
