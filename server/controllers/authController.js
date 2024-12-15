@@ -19,7 +19,7 @@ const isAuthenticated = (req, res, next) => {
 // User registration endpoint
 export const registerUser = async (req, res) => {
   const { user_name, first_name, last_name, email, phone, password } = req.body;
-
+  alert("Registering User");
   try {
     // Check if the user already exists
     const existingUser = await db.query(
