@@ -31,6 +31,7 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+alert(process.env.VITE_API_BASE_URL)
 
 // app.use(cors());
 app.use(bodyParser.json({ limit: "20mb" }));
