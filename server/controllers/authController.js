@@ -1,5 +1,5 @@
 import db from "../db/db.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 // Helper function to hash passwords
 const hashPassword = async (password) => {
