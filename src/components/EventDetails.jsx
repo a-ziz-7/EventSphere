@@ -25,7 +25,7 @@ function EventDetails() {
     const fetchEvent = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/events/id/${eventId}`
+          `${import.meta.env.VITE_API_BASE_URL}/api/events/id/${eventId}`
         );
         setEvent(response.data);
         setIsLoading(false);
@@ -135,7 +135,7 @@ function EventDetails() {
           return;
       }
       const parsedUser = JSON.parse(storedUser);
-      const response = await fetch('http://localhost:5000/api/events/attend', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/attend`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ function EventDetails() {
           return;
       }
       const parsedUser = JSON.parse(storedUser);
-      const response = await fetch('http://localhost:5000/api/events/cancel', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/events/cancel`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

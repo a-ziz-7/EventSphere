@@ -50,7 +50,7 @@ function Signup() {
     try {
       // Make the POST request to the /api/auth/register route
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/register`,
         {
           user_name: formData.username,
           first_name: formData.firstName,

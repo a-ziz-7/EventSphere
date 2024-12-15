@@ -12,7 +12,7 @@ function Buttons({ setIsCategorySelected }) {
   useEffect(() => {
     if (category) {
       axios
-        .get(`http://localhost:5000/api/events/category/${category}`)
+        .get(`${import.meta.env.VITE_API_BASE_URL}/api/events/category/${category}`)
         .then((response) => {
           setEvents(response.data);
           setTotalPages(Math.ceil(response.data.length / pageSize)); // Calculate total pages

@@ -25,7 +25,7 @@ function EventsBrowser() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/events?location=${userLocation.lon},${userLocation.lat}`
+            `${import.meta.env.VITE_API_BASE_URL}/api/events?location=${userLocation.lon},${userLocation.lat}`
           );
           const sortedEvents = response.data.sort(
             (a, b) => new Date(a.time) - new Date(b.time)
