@@ -35,7 +35,6 @@ const port = process.env.PORT || 5000;
 app.use(bodyParser.json({ limit: "20mb" }));
 app.use(bodyParser.urlencoded({ limit: "20mb", extended: true }));
 
-
 app.use(
   cors({
     origin: "http://localhost:5173", // Allow requests from your frontend
